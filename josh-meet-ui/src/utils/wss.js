@@ -3,7 +3,8 @@ import store from "../store/store";
 import { setRoomId, setParticipants } from "../store/action";
 import * as webRTCHandler from "./webRTCHandler";
 
-const SERVER = "http://localhost:5002";
+const IP = window.location.hostname;
+const SERVER = `http://${IP}:5002`;
 
 let socket = null;
 
