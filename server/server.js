@@ -10,7 +10,7 @@ const app = express();
 const server = http.createServer(app);
 
 const corsOpts = {
-  origin: "*",
+  origin: "http://localhost:3000",
 
   methods: ["GET", "POST"],
 
