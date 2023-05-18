@@ -184,6 +184,6 @@ const initializeConnectionHandler = (data, socket) => {
   io.to(connUserSocketId).emit("conn-init", initData);
 };
 
-server.listen(PORT, () => {
+server.listen(PORT, "0.0.0.0", () => {
   console.log(`Server is listening on ${PORT}`);
 });
