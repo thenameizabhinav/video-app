@@ -1,4 +1,4 @@
-import { setShowOverlay } from "../store/action";
+import { setShowOverlay, setMessages } from "../store/action";
 import store from "../store/store";
 import * as wss from "./wss";
 import Peer from "simple-peer";
@@ -48,6 +48,8 @@ const getConfiguration = () => {
   };
 };
 
+const messengerChannel = "messenger";
+
 export const prepareNewPeerConnection = (connUserSocketId, isInitiator) => {
   const configuration = getConfiguration();
 
@@ -55,6 +57,7 @@ export const prepareNewPeerConnection = (connUserSocketId, isInitiator) => {
     initiator: isInitiator,
     config: configuration,
     stream: localStream,
+    channelName: messengerChannel,
   });
 
   peers[connUserSocketId].on("signal", (data) => {
@@ -73,6 +76,11 @@ export const prepareNewPeerConnection = (connUserSocketId, isInitiator) => {
 
     addStream(stream, connUserSocketId);
     streams = [...streams, stream];
+  });
+
+  peers[connUserSocketId].on("data", (data) => {
+    const messageData = JSON.parse(data);
+    appendNewMessage(messageData);
   });
 };
 
@@ -153,4 +161,58 @@ export const toggleMic = (isMuted) => {
 
 export const toggleCamera = (isDisabled) => {
   localStream.getVideoTracks()[0].enabled = isDisabled ? true : false;
+};
+
+export const toggleScreenShare = (
+  isScreenSharingActive,
+  screenSharingStream = null
+) => {
+  if (isScreenSharingActive) {
+    switchVideoTracks(localStream);
+  } else {
+    switchVideoTracks(screenSharingStream);
+  }
+};
+
+const switchVideoTracks = (stream) => {
+  for (let socket_id in peers) {
+    for (let index in peers[socket_id].streams[0].getTracks()) {
+      for (let index2 in stream.getTracks()) {
+        if (
+          peers[socket_id].streams[0].getTracks()[index].kind ===
+          stream.getTracks()[index2].kind
+        ) {
+          peers[socket_id].replaceTrack(
+            peers[socket_id].streams[0].getTracks()[index],
+            stream.getTracks()[index2],
+            peers[socket_id].streams[0]
+          );
+          break;
+        }
+      }
+    }
+  }
+};
+
+const appendNewMessage = (messageData) => {
+  const messages = store.getState().messages;
+  store.dispatch(setMessages([...messages, messageData]));
+};
+
+export const sendMessageUsingDataChannel = (messageContent) => {
+  const identity = store.getState().identity;
+  const localMessageData = {
+    content: messageContent,
+    identity,
+    messageCreatedbyMe: true,
+  };
+  appendNewMessage(localMessageData);
+  const messageData = {
+    content: messageContent,
+    identity,
+  };
+  const stringifiedMessageData = JSON.stringify(messageData);
+  for (let socketId in peers) {
+    peers[socketId].send(stringifiedMessageData);
+  }
 };
