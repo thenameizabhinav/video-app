@@ -9,15 +9,7 @@ const PORT = process.env.PORT || 5002;
 const app = express();
 const server = http.createServer(app);
 
-const corsOpts = {
-  origin: "http://localhost:3000",
-
-  methods: ["GET", "POST"],
-
-  allowedHeaders: ["Content-Type"],
-};
-
-app.use(cors(corsOpts));
+app.use(cors());
 
 let connectedUsers = [];
 let rooms = [];
@@ -42,7 +34,7 @@ app.get("/api/room-exists/:roomId", (req, res) => {
 
 const io = require("socket.io")(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: "*",
     methods: ["GET", "POST"],
   },
 });
