@@ -5,7 +5,7 @@ const cors = require("cors");
 const twilio = require("twilio");
 const { disconnect } = require("process");
 
-const PORT = process.env.PORT || 5003;
+const PORT = process.env.PORT || 5002;
 const app = express();
 const server = http.createServer(app);
 
