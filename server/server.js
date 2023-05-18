@@ -5,11 +5,19 @@ const cors = require("cors");
 const twilio = require("twilio");
 const { disconnect } = require("process");
 
-const PORT = process.env.PORT || 5002;
+const PORT = process.env.PORT || 5003;
 const app = express();
 const server = http.createServer(app);
 
-app.use(cors());
+const corsOpts = {
+  origin: "*",
+
+  methods: ["GET", "POST"],
+
+  allowedHeaders: ["Content-Type"],
+};
+
+app.use(cors(corsOpts));
 
 let connectedUsers = [];
 let rooms = [];
