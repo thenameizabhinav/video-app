@@ -1,7 +1,7 @@
 import { setShowOverlay, setMessages } from "../store/action";
 import store from "../store/store";
 import * as wss from "./wss";
-import SimplePeer from "./simplepeer.min.js";
+import * as SimplePeer from "./simplepeer.min.js";
 // import Peer from "simple-peer";
 
 const defaultConstraints = {
