@@ -388,62 +388,66 @@ video {
     border-radius: 0px 0px 15px 15px;
 }
 
-.video_track_container:first-child:nth-last-child(1) {
+.video_track_container {
+    flex: 1;
+}
+
+/* .video_track_container:first-child:nth-last-child(1) {
     width: 100%;
     height: 100%;
     position: relative;
-}
+} */
 
 .video_track_container:first-child:nth-last-child(2),
 .video_track_container:first-child:nth-last-child(2)~.video_track_container {
-    width: 50%;
-    height: 50%;
-    position: relative;
+    /* width: 50%;
+    height: 50%; */
+    /* position: relative; */
 }
 
 .video_track_container:first-child:nth-last-child(3),
 .video_track_container:first-child:nth-last-child(3)~.video_track_container {
-    width: 50%;
+    /* width: 50%;
     height: 50%;
-    position: relative;
+    position: relative; */
 }
 
 .video_track_container:first-child:nth-last-child(4),
 .video_track_container:first-child:nth-last-child(4)~.video_track_container {
-    width: 50%;
+    /* width: 50%;
     height: 50%;
-    position: relative;
+    position: relative; */
 }
 
 .video_track_container:first-child:nth-last-child(5),
 .video_track_container:first-child:nth-last-child(5)~.video_track_container {
-    width: 33%;
+    /* width: 33%;
     height: 33%;
-    position: relative;
+    position: relative; */
 }
 
 .video_track_container:first-child:nth-last-child(6),
 .video_track_container:first-child:nth-last-child(6)~.video_track_container {
-    width: 33%;
-    height: 33%;
+    /* width: 33%;
+    height: 33%; */
 }
 
 .video_track_container:first-child:nth-last-child(7),
 .video_track_container:first-child:nth-last-child(7)~.video_track_container {
-    width: 33%;
-    height: 33%;
+    /* width: 33%;
+    height: 33%; */
 }
 
 .video_track_container:first-child:nth-last-child(8),
 .video_track_container:first-child:nth-last-child(8)~.video_track_container {
-    width: 33%;
-    height: 33%;
+    /* width: 33%;
+    height: 33%; */
 }
 
 .video_track_container:first-child:nth-last-child(9),
 .video_track_container:first-child:nth-last-child(9)~.video_track_container {
-    width: 33%;
-    height: 33%;
+    /* width: 33%;
+    height: 33%; */
 }
 
 .video_section_container {
