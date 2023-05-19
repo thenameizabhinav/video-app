@@ -9,8 +9,8 @@ const VideoButtons = () => {
     <div className="video_buttons_container">
       <MicButton />
       <CameraButton />
-      <LeaveRoomButton />
       <SwitchToScreenSharingButton />
+      <LeaveRoomButton />
     </div>
   );
 };
