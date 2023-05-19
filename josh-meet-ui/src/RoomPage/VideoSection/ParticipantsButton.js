@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import { FaPeopleArrows } from "react-icons/fa";
-import { setParticipantSection } from "../../store/action";
+import { setParticipantSection, setChatSection } from "../../store/action";
 import { connect } from "react-redux";
 
 const ParticipantsButton = (props) => {
-  const { setPartcipantSectionAction } = props;
+  const { setPartcipantSectionAction, setChatSectionAction, chatSection } =
+    props;
   const [participantButton, setParticipantButton] = useState(false);
 
   const handleParticipantButtonPressed = () => {
-    setPartcipantSectionAction(!participantButton);
     setParticipantButton(!participantButton);
+    if (chatSection) setChatSectionAction(!chatSection);
+    setPartcipantSectionAction(!participantButton);
   };
 
   return (
@@ -21,11 +23,22 @@ const ParticipantsButton = (props) => {
   );
 };
 
+const mapStoreStateToProps = (state) => {
+  return {
+    ...state,
+  };
+};
+
 const mapActionsStateToProps = (dispatch) => {
   return {
     setPartcipantSectionAction: (participantSection) =>
       dispatch(setParticipantSection(participantSection)),
+    setChatSectionAction: (chatSection) =>
+      dispatch(setChatSection(chatSection)),
   };
 };
 
-export default connect(null, mapActionsStateToProps)(ParticipantsButton);
+export default connect(
+  mapStoreStateToProps,
+  mapActionsStateToProps
+)(ParticipantsButton);

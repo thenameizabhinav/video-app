@@ -9,7 +9,6 @@ const NewMessage = () => {
   };
   const handleKeyPressed = (event) => {
     if (event.key === "Enter") {
-      event.preventDefault();
       console.log("sending message to other users");
     }
   };
