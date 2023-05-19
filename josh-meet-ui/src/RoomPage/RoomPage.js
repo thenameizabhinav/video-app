@@ -32,11 +32,6 @@ const RoomPage = ({
       {participantSection && <ParticipantsSection />}
       {chatSection && <ChatSection />}
       <RoomLabel roomId={roomId} />
-      <div>
-        <CopyToClipboard text={roomId}>
-          <button>Copy to clipboard with button</button>
-        </CopyToClipboard>
-      </div>
       {showOverlay && <Overlay />}
     </div>
   );

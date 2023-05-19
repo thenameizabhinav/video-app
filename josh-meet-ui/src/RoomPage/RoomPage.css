@@ -7,14 +7,9 @@
 }
 
 .chat_section_container {
-    height: 50%;
-    width: 20%;
+    width: 260px;
     background-color: white;
     color: black;
-    float:right;
-    /* display: flex;
-    flex-direction: column;
-    flex: 1; */
 }
 
 .chat_label_container {
@@ -448,9 +443,10 @@ video {
 }
 
 .video_section_container {
-    height: 100%;
-    width: 60%;
+    /* height: 100%;
+    width: 60%; */
     display: flex;
+    flex: 1;
     flex-direction: column;
     justify-content: flex-end;
 }
