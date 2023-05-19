@@ -1,7 +1,8 @@
 import { setShowOverlay, setMessages } from "../store/action";
 import store from "../store/store";
 import * as wss from "./wss";
-import Peer from "simple-peer";
+import SimplePeer from "./simplepeer.min.js";
+// import Peer from "simple-peer";
 
 const defaultConstraints = {
   audio: true,
@@ -53,7 +54,7 @@ const messengerChannel = "messenger";
 export const prepareNewPeerConnection = (connUserSocketId, isInitiator) => {
   const configuration = getConfiguration();
 
-  peers[connUserSocketId] = new Peer({
+  peers[connUserSocketId] = new SimplePeer({
     initiator: isInitiator,
     config: configuration,
     stream: localStream,
@@ -82,7 +83,12 @@ export const prepareNewPeerConnection = (connUserSocketId, isInitiator) => {
     const messageData = JSON.parse(data);
     appendNewMessage(messageData);
   });
+
+  peers[connUserSocketId].on('error', (err) => {
+    console.log("Error: Something bad happened: ", err);
+  })
 };
+
 
 export const handleSignalingData = (data) => {
   // add signaling data to the peer connection
