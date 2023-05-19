@@ -33,8 +33,8 @@ app.get("/api/room-exists/:roomId", (req, res) => {
 });
 
 const io = require("socket.io")(server, {
-  path: "/socketio",
-
+   path: '/socketio',
+	
   cors: {
     origin: "*",
     methods: ["GET", "POST"],
