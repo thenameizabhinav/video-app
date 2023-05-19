@@ -43,9 +43,19 @@ let streams = [];
 
 const getConfiguration = () => {
   return {
+    // iceServers: [
+    //   {
+    //     urls: "stun:stun.l.google.com:19302",
+    //   },
+    // ],
     iceServers: [
       {
         urls: "stun:stun.l.google.com:19302",
+      },
+      {
+        urls: ["turn:3.108.41.47:3478"],
+        username: "josh",
+        credential: "password",
       },
     ],
   };
@@ -86,11 +96,10 @@ export const prepareNewPeerConnection = (connUserSocketId, isInitiator) => {
     appendNewMessage(messageData);
   });
 
-  peers[connUserSocketId].on('error', (err) => {
+  peers[connUserSocketId].on("error", (err) => {
     console.log("Error: Something bad happened: ", err);
-  })
+  });
 };
-
 
 export const handleSignalingData = (data) => {
   // add signaling data to the peer connection
@@ -158,7 +167,7 @@ const addStream = (stream, connUserSocketId) => {
     }
   });
   videoContainer.appendChild(videoElement);
-   videoContainer.style.position = "static";
+  videoContainer.style.position = "static";
   videosContainer.appendChild(videoContainer);
 };
 
