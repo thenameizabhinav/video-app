@@ -10,9 +10,7 @@ const SERVER = `http://${IP}:5002`;
 let socket = null;
 
 export const connectWithSocketIOServer = () => {
-  socket = io(SERVER,
-	  {path: '/socketio'}
-  );
+  socket = io(SERVER, { path: "/socketio" });
 
   socket.on("connect", () => {
     console.log("successfully connected with socket io server");
@@ -46,6 +44,11 @@ export const connectWithSocketIOServer = () => {
     const { connUserSocketId } = data;
     webRTCHandler.prepareNewPeerConnection(connUserSocketId, true);
   });
+
+  socket.on("user-disconnected", (data) => {
+    webRTCHandler.removePeerConnection(data);
+  });
+  
 };
 
 export const createNewRoom = (identity) => {

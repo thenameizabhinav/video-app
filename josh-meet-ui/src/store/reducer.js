@@ -8,6 +8,8 @@ const initState = {
   showOverlay: true,
   participants: [],
   messages: [],
+  chatSection: false,
+  participantSection: false,
 };
 
 const reducer = (state = initState, action) => {
@@ -46,6 +48,16 @@ const reducer = (state = initState, action) => {
       return {
         ...state,
         messages: action.messages,
+      };
+    case Actions.SET_CHAT_SECTION:
+      return {
+        ...state,
+        chatSection: action.chatSection,
+      };
+    case Actions.SET_PARTICIPANT_SECTION:
+      return {
+        ...state,
+        participantSection: action.participantSection,
       };
     default:
       return state;

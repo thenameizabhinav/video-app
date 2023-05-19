@@ -150,6 +150,7 @@ const addStream = (stream, connUserSocketId) => {
     }
   });
   videoContainer.appendChild(videoElement);
+  videoContainer.style.position = "static";
   videosContainer.appendChild(videoContainer);
 };
 

@@ -6,6 +6,8 @@ const Actions = {
   SET_SHOW_OVERLAY: "SET_SHOW_OVERLAY",
   SET_PARTICIPANTS: "SET_PARTICIPANTS",
   SET_MESSAGES: "SET_MESSAGES",
+  SET_CHAT_SECTION: "SET_CHAT_SECTION",
+  SET_PARTICIPANT_SECTION: "SET_PARTICIPIANT_SECTION",
 };
 
 export const setIsRoomHost = (isRoomHost) => {
@@ -56,4 +58,19 @@ export const setMessages = (messages) => {
     messages,
   };
 };
+
+export const setChatSection = (chatSection) => {
+  return {
+    type: Actions.SET_CHAT_SECTION,
+    chatSection,
+  };
+};
+
+export const setParticipantSection = (participantSection) => {
+  return {
+    type: Actions.SET_PARTICIPANT_SECTION,
+    participantSection,
+  };
+};
+
 export default Actions;

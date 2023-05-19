@@ -3,6 +3,8 @@ import MicButton from "./MicButton";
 import CameraButton from "./CameraButton";
 import LeaveRoomButton from "./LeaveRoomButton";
 import SwitchToScreenSharingButton from "./SwitchToScreenSharingButton";
+import ParticipantsButton from "./ParticipantsButton";
+import ChatButton from "./ChatButton";
 
 const VideoButtons = () => {
   return (
@@ -11,6 +13,8 @@ const VideoButtons = () => {
       <CameraButton />
       <SwitchToScreenSharingButton />
       <LeaveRoomButton />
+      <ParticipantsButton />
+      <ChatButton />
     </div>
   );
 };

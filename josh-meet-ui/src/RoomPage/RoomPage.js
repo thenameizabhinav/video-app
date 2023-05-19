@@ -7,8 +7,16 @@ import RoomLabel from "./RoomLabel";
 import { connect } from "react-redux";
 import * as webRTCHandler from "../utils/webRTCHandler.js";
 import Overlay from "./Overlay";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
-const RoomPage = ({ roomId, identity, isRoomHost, showOverlay }) => {
+const RoomPage = ({
+  roomId,
+  identity,
+  isRoomHost,
+  showOverlay,
+  chatSection,
+  participantSection,
+}) => {
   useEffect(() => {
     webRTCHandler.getLocalPreviewandInitRoomConnection(
       isRoomHost,
@@ -16,12 +24,19 @@ const RoomPage = ({ roomId, identity, isRoomHost, showOverlay }) => {
       roomId
     );
   }, []);
+
+  console.log("hi", chatSection, participantSection);
   return (
     <div className="room_container">
-      <ParticipantsSection />
       <VideoSection />
-      <ChatSection />
+      {participantSection && <ParticipantsSection />}
+      {chatSection && <ChatSection />}
       <RoomLabel roomId={roomId} />
+      <div>
+        <CopyToClipboard text={roomId}>
+          <button>Copy to clipboard with button</button>
+        </CopyToClipboard>
+      </div>
       {showOverlay && <Overlay />}
     </div>
   );
