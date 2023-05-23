@@ -48,16 +48,48 @@ const getConfiguration = () => {
     //     urls: "stun:stun.l.google.com:19302",
     //   },
     // ],
+    /*
     iceServers: [
+      //{
+       // urls: "stun:stun.l.google.com:19302",
+      //},
       {
-        urls: "stun:stun.l.google.com:19302",
+        urls: ["turn:3.108.41.47:3478?transport=udp"],
+        username: "josh",
+        credential: "password",
       },
       {
-        urls: ["turn:3.108.41.47:3478"],
+        urls: ["turn:3.108.41.47:3478?transport=tcp"],
         username: "josh",
         credential: "password",
       },
     ],
+    */
+    iceServers: [
+      {
+        urls: "stun:a.relay.metered.ca:80",
+      },
+      {
+        urls: "turn:a.relay.metered.ca:80",
+        username: "85fc2c24880035c8895a14e4",
+        credential: "LdV/qDmJZelF2AFw",
+      },
+      {
+        urls: "turn:a.relay.metered.ca:80?transport=tcp",
+        username: "85fc2c24880035c8895a14e4",
+        credential: "LdV/qDmJZelF2AFw",
+      },
+      {
+        urls: "turn:a.relay.metered.ca:443",
+        username: "85fc2c24880035c8895a14e4",
+        credential: "LdV/qDmJZelF2AFw",
+      },
+      {
+        urls: "turn:a.relay.metered.ca:443?transport=tcp",
+        username: "85fc2c24880035c8895a14e4",
+        credential: "LdV/qDmJZelF2AFw",
+      },
+  ],  
   };
 };
 
