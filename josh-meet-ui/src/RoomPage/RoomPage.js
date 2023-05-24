@@ -25,7 +25,6 @@ const RoomPage = ({
     );
   }, []);
 
-  console.log("hi", chatSection, participantSection);
   return (
     <div className="room_container">
       <VideoSection />
