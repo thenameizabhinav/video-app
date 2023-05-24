@@ -1,0 +1,19 @@
+body {
+    background-color: red;
+}
+
+html,
+body {
+    min-height: 100vh;
+}
+
+body {
+    @include scrollbars();
+}
+
+#root {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    @include scrollbars();
+}
