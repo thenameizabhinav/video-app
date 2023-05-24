@@ -48,11 +48,8 @@ const getConfiguration = () => {
     //     urls: "stun:stun.l.google.com:19302",
     //   },
     // ],
-    /*
+    
     iceServers: [
-      //{
-       // urls: "stun:stun.l.google.com:19302",
-      //},
       {
         urls: ["turn:3.108.41.47:3478?transport=udp"],
         username: "josh",
@@ -64,7 +61,8 @@ const getConfiguration = () => {
         credential: "password",
       },
     ],
-    */
+    
+/*
     iceServers: [
       {
         urls: "stun:a.relay.metered.ca:80",
@@ -89,7 +87,8 @@ const getConfiguration = () => {
         username: "85fc2c24880035c8895a14e4",
         credential: "LdV/qDmJZelF2AFw",
       },
-  ],  
+  ],
+ */
   };
 };
 
