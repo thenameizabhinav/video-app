@@ -170,21 +170,6 @@ const addStream = (stream, connUserSocketId) => {
   videoContainer.id = connUserSocketId;
 
   videoContainer.classList.add("video_track_container");
-
-  // switch (streams.length) {
-  //   case 1:
-  //     videoContainer.classList.add("video_track_container w-400");
-  //     break;
-  //   case 2:
-  //     videoContainer.classList.add("video_track_container w-350");
-  //     break;
-  //   case 3:
-  //     videoContainer.classList.add("video_track_container w-300");
-  //     break;
-  //   case 4:
-  //     videoContainer.classList.add("video_track_container w-250");
-  //     break;
-  // }
   const videoElement = document.createElement("video");
   videoElement.autoplay = true;
   videoElement.srcObject = stream;
@@ -257,7 +242,7 @@ export const sendMessageUsingDataChannel = (messageContent) => {
   const localMessageData = {
     content: messageContent,
     identity,
-    messageCreatedbyMe: true,
+    messageCreatedByMe: true,
   };
   appendNewMessage(localMessageData);
   const messageData = {
