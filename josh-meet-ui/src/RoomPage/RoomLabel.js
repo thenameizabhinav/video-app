@@ -1,16 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import Button from "react-bootstrap/Button";
+import Toast from "react-bootstrap/Toast";
+import ToastContainer from "react-bootstrap/ToastContainer";
+import "./RoomPage.css";
 
 const RoomLabel = ({ roomId }) => {
+  const [showToast, setShowToast] = useState(true);
+
+  const toggleShowToast = () => setShowToast(!showToast);
+
   return (
-    <div className="room_label">
-      <CopyToClipboard className="room_label_paragraph" text={roomId}>
-        <button>
-          <span className="copy_button">Click to Copy Id</span>
-          {`  ${roomId}`}
-        </button>
-      </CopyToClipboard>
-    </div>
+    <ToastContainer className="p-3" position="top-center">
+      <Toast
+        show={showToast}
+        delay={30000}
+        autohide
+        onClose={toggleShowToast}
+        bg="dark"
+      >
+        <Toast.Header>
+          <strong className="me-auto">
+            Meeting Id: Click the below ID to copy
+          </strong>
+        </Toast.Header>
+        <Toast.Body className="text-white">
+          <CopyToClipboard text={roomId}>
+            <Button variant="dark">{`  ${roomId}`}</Button>
+          </CopyToClipboard>
+        </Toast.Body>
+      </Toast>
+    </ToastContainer>
   );
 };
 

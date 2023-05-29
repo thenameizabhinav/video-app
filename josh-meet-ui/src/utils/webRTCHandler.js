@@ -8,10 +8,7 @@ const SimplePeer = window.SimplePeer;
 
 const defaultConstraints = {
   audio: true,
-  video: {
-    width: "480",
-    height: "360",
-  },
+  video: true,
 };
 
 let localStream;
@@ -43,16 +40,7 @@ let streams = [];
 
 const getConfiguration = () => {
   return {
-    // iceServers: [
-    //   {
-    //     urls: "stun:stun.l.google.com:19302",
-    //   },
-    // ],
-    /*
     iceServers: [
-      //{
-       // urls: "stun:stun.l.google.com:19302",
-      //},
       {
         urls: ["turn:3.108.41.47:3478?transport=udp"],
         username: "josh",
@@ -64,32 +52,31 @@ const getConfiguration = () => {
         credential: "password",
       },
     ],
-    */
-    iceServers: [
-      {
-        urls: "stun:a.relay.metered.ca:80",
-      },
-      {
-        urls: "turn:a.relay.metered.ca:80",
-        username: "85fc2c24880035c8895a14e4",
-        credential: "LdV/qDmJZelF2AFw",
-      },
-      {
-        urls: "turn:a.relay.metered.ca:80?transport=tcp",
-        username: "85fc2c24880035c8895a14e4",
-        credential: "LdV/qDmJZelF2AFw",
-      },
-      {
-        urls: "turn:a.relay.metered.ca:443",
-        username: "85fc2c24880035c8895a14e4",
-        credential: "LdV/qDmJZelF2AFw",
-      },
-      {
-        urls: "turn:a.relay.metered.ca:443?transport=tcp",
-        username: "85fc2c24880035c8895a14e4",
-        credential: "LdV/qDmJZelF2AFw",
-      },
-  ],  
+    // iceServers: [
+    //   {
+    //     urls: "stun:a.relay.metered.ca:80",
+    //   },
+    //   {
+    //     urls: "turn:a.relay.metered.ca:80",
+    //     username: "85fc2c24880035c8895a14e4",
+    //     credential: "LdV/qDmJZelF2AFw",
+    //   },
+    //   {
+    //     urls: "turn:a.relay.metered.ca:80?transport=tcp",
+    //     username: "85fc2c24880035c8895a14e4",
+    //     credential: "LdV/qDmJZelF2AFw",
+    //   },
+    //   {
+    //     urls: "turn:a.relay.metered.ca:443",
+    //     username: "85fc2c24880035c8895a14e4",
+    //     credential: "LdV/qDmJZelF2AFw",
+    //   },
+    //   {
+    //     urls: "turn:a.relay.metered.ca:443?transport=tcp",
+    //     username: "85fc2c24880035c8895a14e4",
+    //     credential: "LdV/qDmJZelF2AFw",
+    //   },
+    // ],
   };
 };
 
@@ -177,11 +164,27 @@ const showLocalVideoPreview = (stream) => {
 
 const addStream = (stream, connUserSocketId) => {
   //display incoming stream
+  console.log("stream", streams.length);
   const videosContainer = document.getElementById("videos_portal");
   const videoContainer = document.createElement("div");
   videoContainer.id = connUserSocketId;
 
   videoContainer.classList.add("video_track_container");
+
+  // switch (streams.length) {
+  //   case 1:
+  //     videoContainer.classList.add("video_track_container w-400");
+  //     break;
+  //   case 2:
+  //     videoContainer.classList.add("video_track_container w-350");
+  //     break;
+  //   case 3:
+  //     videoContainer.classList.add("video_track_container w-300");
+  //     break;
+  //   case 4:
+  //     videoContainer.classList.add("video_track_container w-250");
+  //     break;
+  // }
   const videoElement = document.createElement("video");
   videoElement.autoplay = true;
   videoElement.srcObject = stream;
