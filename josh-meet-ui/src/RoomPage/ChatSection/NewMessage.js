@@ -7,9 +7,9 @@ const NewMessage = () => {
   const handleTextChange = (event) => {
     setMessage(event.target.value);
   };
+
   const handleKeyPressed = (event) => {
     if (event.key === "Enter") {
-      console.log(event.key);
       sendMessage();
       console.log("sending message to other users");
     }
