@@ -17,13 +17,18 @@ const RoomPage = ({
   chatSection,
   participantSection,
 }) => {
-  useEffect(() => {
-    webRTCHandler.getLocalPreviewandInitRoomConnection(
-      isRoomHost,
-      identity,
-      roomId
-    );
-  }, []);
+  if (!isRoomHost && !roomId) {
+    const siteUrl = window.location.origin;
+    window.location.href = siteUrl;
+  } else {
+    useEffect(() => {
+      webRTCHandler.getLocalPreviewandInitRoomConnection(
+        isRoomHost,
+        identity,
+        roomId
+      );
+    }, []);
+  }
 
   return (
     <div className="room_container">
