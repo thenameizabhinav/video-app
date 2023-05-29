@@ -16,8 +16,6 @@ const JoinRoomContent = (props) => {
   const navigate = useNavigate();
   const {
     isRoomHost,
-    setConnectOnlyWithAudio,
-    connectOnlyWithAudio,
     setIdentityAction,
     setRoomIdAction,
   } = props;
@@ -43,12 +41,11 @@ const JoinRoomContent = (props) => {
       if (full) {
         setErrorMessage("Meeting is full. Please Try again later");
       } else {
-        // .....
         setRoomIdAction(roomIdValue);
         navigate("/room");
       }
     } else {
-      setErrorMessage("Meeting not found. Check your meeting Id");
+      setErrorMessage("Meeting Id not found. Check your meeting Id");
     }
   };
 
@@ -65,11 +62,6 @@ const JoinRoomContent = (props) => {
         setNameValue={setNameValue}
         isRoomHost={isRoomHost}
       />
-
-      {/* <OnlyWithAudioCheckbox
-        setConnectOnlyWithAudio={setConnectOnlyWithAudio}
-        connectOnlyWithAudio={connectOnlyWithAudio}
-      /> */}
 
       <ErrorMessage errorMessage={errorMessage} />
       <JoinRoomButtons

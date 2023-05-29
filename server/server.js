@@ -21,7 +21,7 @@ app.get("/api/room-exists/:roomId", (req, res) => {
 
   if (room) {
     // send reponse that room exists
-    if (room.connectedUsers.length > 3) {
+    if (room.connectedUsers.length > 9) {
       return res.send({ roomExists: true, full: true });
     } else {
       return res.send({ roomExists: true, full: false });
