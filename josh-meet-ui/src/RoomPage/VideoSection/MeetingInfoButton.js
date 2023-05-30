@@ -11,7 +11,7 @@ const MeetingInfoButton = () => {
 
   return (
     <div className="video_button_container">
-      <button onClick={handleMeetingInfoButton}>
+      <button onClick={handleMeetingInfoButton} className="video_button">
         <FaICursor />
       </button>
     </div>

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import SwitchImg from "../../resources/images/switchToScreenSharing.svg";
 import * as webRTCHandler from "../../utils/webRTCHandler";
 import LocalScreenSharingPreview from "./LocalScreenSharingPreview";
 const constraints = {
@@ -42,12 +41,9 @@ const SwitchToScreenSharingButton = () => {
   return (
     <>
       <div className="video_button_container">
-        <img
-          src={SwitchImg}
-          className="video_button_image"
-          onClick={handleScreenShareToggle}
-          alt="screen-sharing"
-        />
+        <button onClick={handleScreenShareToggle} className="video_button">
+          <span className="material-icons md-48">present_to_all</span>
+        </button>
       </div>
       {isScreenSharingActive && (
         <LocalScreenSharingPreview stream={screenSharingStream} />

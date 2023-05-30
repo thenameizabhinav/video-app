@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import CameraButtonImg from "../../resources/images/camera.svg";
-import CameraButtonImgOff from "../../resources/images/cameraOff.svg";
 import * as webRTCHandler from "../../utils/webRTCHandler";
 
 const CameraButton = () => {
@@ -9,15 +7,19 @@ const CameraButton = () => {
     webRTCHandler.toggleCamera(isLocalVideoDisable);
     setIsLocalVideoDisabled(!isLocalVideoDisable);
   };
+  const buttonClassName = `video_button ${
+    isLocalVideoDisable ? "video_button_disabled" : ""
+  }`;
 
   return (
     <div className="video_button_container">
-      <img
-        src={isLocalVideoDisable ? CameraButtonImgOff : CameraButtonImg}
-        className="video_button_image"
-        onClick={handleCameraButtonPressed}
-        alt="camera"
-      />
+      <button onClick={handleCameraButtonPressed} className={buttonClassName}>
+        {!isLocalVideoDisable ? (
+          <span className="material-icons">videocam</span>
+        ) : (
+          <span className="material-icons">videocam_off</span>
+        )}
+      </button>
     </div>
   );
 };

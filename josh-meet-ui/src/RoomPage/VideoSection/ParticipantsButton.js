@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { FaPeopleArrows } from "react-icons/fa";
 import { setParticipantSection, setChatSection } from "../../store/action";
 import { connect } from "react-redux";
 
@@ -16,8 +15,8 @@ const ParticipantsButton = (props) => {
 
   return (
     <div className="video_button_container">
-      <button onClick={handleParticipantButtonPressed}>
-        <FaPeopleArrows />
+      <button onClick={handleParticipantButtonPressed} className="video_button">
+        <span className="material-icons">people</span>
       </button>
     </div>
   );

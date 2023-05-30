@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import MicButtonImgOff from "../../resources/images/micOff.svg";
-import MicButtonImg from "../../resources/images/mic.svg";
 import * as webRTCHandler from "../../utils/webRTCHandler";
 
 const MicButton = () => {
@@ -11,14 +9,19 @@ const MicButton = () => {
     setIsMicMuted(!isMicMuted);
   };
 
+  const buttonClassName = `video_button ${
+    isMicMuted ? "video_button_disabled" : ""
+  }`;
+
   return (
     <div className="video_button_container">
-      <img
-        src={isMicMuted ? MicButtonImgOff : MicButtonImg}
-        onClick={handleMicButtonPressed}
-        className="video_button_image"
-        alt="mic"
-      />
+      <button onClick={handleMicButtonPressed} className={buttonClassName}>
+        {!isMicMuted ? (
+          <span className="material-icons">mic</span>
+        ) : (
+          <span className="material-icons">mic_off</span>
+        )}
+      </button>
     </div>
   );
 };
