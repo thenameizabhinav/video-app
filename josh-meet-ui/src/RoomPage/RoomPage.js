@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import "./RoomPage.css";
-import VideoSection from "./VideoSection/VideoSection";
 import VideoButtons from "./VideoSection/VideoButtons.js";
 import ParticipantsSection from "./ParticipantsSection/ParticipantsSection";
 import ChatSection from "./ChatSection/ChatSection";

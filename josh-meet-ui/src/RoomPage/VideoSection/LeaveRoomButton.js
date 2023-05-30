@@ -7,8 +7,8 @@ const LeaveRoomButton = () => {
   };
   return (
     <div className="video_button_container">
-      <button className="video_button_end" onClick={handleRoomDisconnection}>
-        End
+      <button onClick={handleRoomDisconnection} className="video_end_button">
+        <span class="material-icons">call_end</span>
       </button>
     </div>
   );

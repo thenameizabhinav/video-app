@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { FaFacebookMessenger } from "react-icons/fa";
 import { setChatSection } from "../../store/action";
 import { setParticipantSection } from "../../store/action";
 import { connect } from "react-redux";
@@ -18,10 +17,11 @@ const ChatButton = (props) => {
     setChatSectionAction(!chatButton);
   };
 
+
   return (
     <div className="video_button_container">
-      <button onClick={handleChatButtonPressed}>
-        <FaFacebookMessenger />
+      <button onClick={handleChatButtonPressed} className="video_button ">
+        <span className="material-icons">chat</span>
       </button>
     </div>
   );
