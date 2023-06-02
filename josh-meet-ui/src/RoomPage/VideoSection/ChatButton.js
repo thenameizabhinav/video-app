@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { setChatSection } from "../../store/action";
 import { setParticipantSection } from "../../store/action";
 import { connect } from "react-redux";
+import { Tooltip, OverlayTrigger } from "react-bootstrap";
 
 const ChatButton = (props) => {
   const {
@@ -17,12 +18,23 @@ const ChatButton = (props) => {
     setChatSectionAction(!chatButton);
   };
 
+  const tooltip = (
+    <Tooltip id="tooltip">
+      <strong>Chat with everyone</strong>
+    </Tooltip>
+  );
+
+  const buttonClassName = `video_button ${
+    chatButton ? "chat_button_clicked" : ""
+  }`;
 
   return (
     <div className="video_button_container">
-      <button onClick={handleChatButtonPressed} className="video_button ">
-        <span className="material-icons">chat</span>
-      </button>
+      <OverlayTrigger placement="top" overlay={tooltip}>
+        <button onClick={handleChatButtonPressed} className={buttonClassName}>
+          <span className="material-icons">chat</span>
+        </button>
+      </OverlayTrigger>
     </div>
   );
 };

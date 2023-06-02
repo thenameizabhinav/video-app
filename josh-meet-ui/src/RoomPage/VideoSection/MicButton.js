@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import * as webRTCHandler from "../../utils/webRTCHandler";
+import { Tooltip, OverlayTrigger } from "react-bootstrap";
 
 const MicButton = () => {
   const [isMicMuted, setIsMicMuted] = useState(false);
@@ -13,15 +14,25 @@ const MicButton = () => {
     isMicMuted ? "video_button_disabled" : ""
   }`;
 
+  const tooltip = (
+    <Tooltip id="tooltip">
+      <strong>
+        {isMicMuted ? "Turn on microphone" : "Turn off microphone"}
+      </strong>
+    </Tooltip>
+  );
+
   return (
     <div className="video_button_container">
-      <button onClick={handleMicButtonPressed} className={buttonClassName}>
-        {!isMicMuted ? (
-          <span className="material-icons">mic</span>
-        ) : (
-          <span className="material-icons">mic_off</span>
-        )}
-      </button>
+      <OverlayTrigger placement="top" overlay={tooltip}>
+        <button onClick={handleMicButtonPressed} className={buttonClassName}>
+          {!isMicMuted ? (
+            <span className="material-icons">mic</span>
+          ) : (
+            <span className="material-icons">mic_off</span>
+          )}
+        </button>
+      </OverlayTrigger>
     </div>
   );
 };
