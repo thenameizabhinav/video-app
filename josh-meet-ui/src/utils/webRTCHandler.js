@@ -164,7 +164,6 @@ const showLocalVideoPreview = (stream) => {
 
 const addStream = (stream, connUserSocketId) => {
   //display incoming stream
-  console.log("stream", streams.length);
   const videosContainer = document.getElementById("videos_portal");
   const videoContainer = document.createElement("div");
   videoContainer.id = connUserSocketId;
@@ -239,18 +238,32 @@ const appendNewMessage = (messageData) => {
 
 export const sendMessageUsingDataChannel = (messageContent) => {
   const identity = store.getState().identity;
+  const chatTime = formatAMPM(new Date());
   const localMessageData = {
     content: messageContent,
     identity,
     messageCreatedByMe: true,
+    chatTime,
   };
   appendNewMessage(localMessageData);
   const messageData = {
     content: messageContent,
     identity,
+    chatTime,
   };
   const stringifiedMessageData = JSON.stringify(messageData);
   for (let socketId in peers) {
     peers[socketId].send(stringifiedMessageData);
   }
+};
+
+const formatAMPM = (date) => {
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var ampm = hours >= 12 ? "pm" : "am";
+  hours = hours % 12;
+  hours = hours ? hours : 12;
+  minutes = minutes < 10 ? "0" + minutes : minutes;
+  var strTime = hours + ":" + minutes + " " + ampm;
+  return strTime;
 };

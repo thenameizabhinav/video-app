@@ -73,7 +73,6 @@ io.on("connection", (socket) => {
 
 const createNewRoomHandler = (data, socket) => {
   console.log("host is creating new room");
-  console.log(data);
   const { identity } = data;
 
   const roomId = uuidv4();
