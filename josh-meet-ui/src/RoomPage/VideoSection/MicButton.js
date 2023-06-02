@@ -15,7 +15,7 @@ const MicButton = () => {
   }`;
 
   const tooltip = (
-    <Tooltip id="tooltip">
+    <Tooltip id="tooltip" style={{ position: "fixed" }}>
       <strong>
         {isMicMuted ? "Turn on microphone" : "Turn off microphone"}
       </strong>

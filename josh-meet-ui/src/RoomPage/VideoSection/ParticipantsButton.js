@@ -15,7 +15,7 @@ const ParticipantsButton = (props) => {
   };
 
   const tooltip = (
-    <Tooltip id="tooltip">
+    <Tooltip id="tooltip" style={{ position: "fixed" }}>
       <strong>Show participants</strong>
     </Tooltip>
   );

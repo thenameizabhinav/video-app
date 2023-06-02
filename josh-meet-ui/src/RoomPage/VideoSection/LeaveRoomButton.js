@@ -8,7 +8,7 @@ const LeaveRoomButton = () => {
   };
 
   const tooltip = (
-    <Tooltip id="tooltip">
+    <Tooltip id="tooltip" style={{ position: "fixed" }}>
       <strong>Leave Call</strong>
     </Tooltip>
   );

@@ -41,7 +41,7 @@ const SwitchToScreenSharingButton = () => {
   };
 
   const tooltip = (
-    <Tooltip id="tooltip">
+    <Tooltip id="tooltip" style={{ position: "fixed" }}>
       <strong>
         {isScreenSharingActive ? "You are presenting" : "Present now"}
       </strong>

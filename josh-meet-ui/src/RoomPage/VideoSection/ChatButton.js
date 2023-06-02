@@ -19,7 +19,7 @@ const ChatButton = (props) => {
   };
 
   const tooltip = (
-    <Tooltip id="tooltip">
+    <Tooltip id="tooltip" style={{ position: "fixed" }}>
       <strong>Chat with everyone</strong>
     </Tooltip>
   );
