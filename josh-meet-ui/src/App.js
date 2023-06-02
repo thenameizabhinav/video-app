@@ -7,7 +7,6 @@ import { connectWithSocketIOServer } from "./utils/wss";
 
 function App() {
   useEffect(() => {
-    console.log("use-effect");
     connectWithSocketIOServer();
   }, []);
 

@@ -1,8 +1,14 @@
 import React from "react";
 import { connect } from "react-redux";
 
-const Message = ({ key, author, content, sameAuthor, messageCreatedByMe }) => {
-  console.log(messageCreatedByMe);
+const Message = ({
+  key,
+  author,
+  content,
+  sameAuthor,
+  messageCreatedByMe,
+  chatTime,
+}) => {
   const alignClass = messageCreatedByMe
     ? "message_align_right"
     : "message_align_left";
@@ -11,16 +17,21 @@ const Message = ({ key, author, content, sameAuthor, messageCreatedByMe }) => {
     ? "message_right_styles"
     : "message_left_styles";
 
+
   return (
     <div className={`message_container ${alignClass}`}>
-      {!sameAuthor && <p className="message_title">{authorText}</p>}
+      {!sameAuthor && (
+        <p className="message_title">
+          {authorText}
+          <span className="message_time">{` ${chatTime}`}</span>
+        </p>
+      )}
       <p className={`message_content ${contentAdditionalStyles}`}> {content}</p>
     </div>
   );
 };
 
 const Messages = ({ messages }) => {
-  console.log(messages);
   return (
     <div className="messages_container">
       {messages.map((message, index) => {
@@ -33,6 +44,7 @@ const Messages = ({ messages }) => {
             content={message.content}
             sameAuthor={sameAuthor}
             messageCreatedByMe={message.messageCreatedByMe}
+            chatTime={message.chatTime}
           />
         );
       })}
