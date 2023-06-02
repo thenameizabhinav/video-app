@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import * as webRTCHandler from "../../utils/webRTCHandler";
 import LocalScreenSharingPreview from "./LocalScreenSharingPreview";
+import { Tooltip, OverlayTrigger } from "react-bootstrap";
+
 const constraints = {
-  audio: false,
+  audio: true,
   video: true,
 };
 
@@ -38,16 +40,31 @@ const SwitchToScreenSharingButton = () => {
     }
   };
 
+  const tooltip = (
+    <Tooltip id="tooltip">
+      <strong>
+        {isScreenSharingActive ? "You are presenting" : "Present now"}
+      </strong>
+    </Tooltip>
+  );
+
+  const buttonClassName = `video_button ${
+    isScreenSharingActive ? "participant_button_clicked" : ""
+  }`;
+
   return (
     <>
       <div className="video_button_container">
-        <button onClick={handleScreenShareToggle} className="video_button">
-          <span className="material-icons md-48">present_to_all</span>
-        </button>
+        <OverlayTrigger placement="top" overlay={tooltip}>
+          <button onClick={handleScreenShareToggle} className={buttonClassName}>
+            <span className="material-icons md-48">present_to_all</span>
+          </button>
+        </OverlayTrigger>
       </div>
-      {isScreenSharingActive && (
+      {/* disabled temp */}
+      {/* {isScreenSharingActive && (
         <LocalScreenSharingPreview stream={screenSharingStream} />
-      )}
+      )} */}
     </>
   );
 };

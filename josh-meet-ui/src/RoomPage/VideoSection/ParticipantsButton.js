@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { setParticipantSection, setChatSection } from "../../store/action";
 import { connect } from "react-redux";
+import { Tooltip, OverlayTrigger } from "react-bootstrap";
 
 const ParticipantsButton = (props) => {
   const { setPartcipantSectionAction, setChatSectionAction, chatSection } =
@@ -13,11 +14,26 @@ const ParticipantsButton = (props) => {
     setPartcipantSectionAction(!participantButton);
   };
 
+  const tooltip = (
+    <Tooltip id="tooltip">
+      <strong>Show participants</strong>
+    </Tooltip>
+  );
+
+  const buttonClassName = `video_button ${
+    participantButton ? "participant_button_clicked" : ""
+  }`;
+
   return (
     <div className="video_button_container">
-      <button onClick={handleParticipantButtonPressed} className="video_button">
-        <span className="material-icons">people</span>
-      </button>
+      <OverlayTrigger placement="top" overlay={tooltip}>
+        <button
+          onClick={handleParticipantButtonPressed}
+          className={buttonClassName}
+        >
+          <span className="material-icons">people</span>
+        </button>
+      </OverlayTrigger>
     </div>
   );
 };

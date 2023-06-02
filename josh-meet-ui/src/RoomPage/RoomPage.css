@@ -30,14 +30,13 @@
 
 .chat_label_container {
     display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
+    justify-content: center;
+    margin-top: 5px;
 }
 
 .chat_label_paragraph {
     font-weight: 700;
-    color: #9ca5ab;
-    margin-left: 40px;
+    color: black;
     font-size: 16px;
 }
 
@@ -51,10 +50,10 @@
 }
 
 .new_message_input {
-    border: 1px solid #d1dbe2;
+    border: 2px solid #d1dbe2;
     border-radius: 60px;
     padding: 0 20px;
-    height: 60px;
+    height: 40px;
     font-size: 16px;
     width: 80%;
     box-shadow: 2px 5px 5px rgba(0, 82, 201, 0.05);
@@ -65,8 +64,11 @@
 }
 
 .new_message_button {
+    background: none;
+    border: none;
     position: absolute;
     right: 12%;
+    color: green
 }
 
 .messages_container {
@@ -180,7 +182,6 @@
     justify-content: flex-start;
     flex-direction: column;
     align-content: flex-start;
-    height: 50%;
 }
 
 .direct_chat_container {
@@ -224,14 +225,15 @@
     color: black;
     text-align: start;
     font-weight: 500;
-    margin-left: 40px;
     transition: 0.5s;
-    margin: 0 40px;
-    padding: 10px 0px;
+    margin: 0 20px;
+    padding: 10px 10px;
+    background-color: #e5e5e5;
+    border-radius: 10px;
 }
 
 .participants_paragraph:hover {
-    background-color: #e5e5e5;
+    background-color: gray;
     border-radius: 8px;
 }
 
@@ -250,21 +252,19 @@
     background-color: white;
     display: flex;
     flex-direction: column;
-    padding: 24px;
+    padding: 12px;
     margin-left:auto;
     border-radius: 10px;
 }
 
 .participants_label_container {
     display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
+    justify-content: center;
 }
 
 .participants_label_paragraph {
     font-weight: 700;
-    color: #9ca5ab;
-    margin-left: 40px;
+    color: black;
     font-size: 16px;
 }
 
@@ -529,4 +529,12 @@ video {
 
 .video_button_disabled {
     background-color: red;
+}
+
+.participant_button_clicked {
+    background-color: #0a91db;
+}
+
+.chat_button_clicked {
+    background-color: #0a91db;
 }
