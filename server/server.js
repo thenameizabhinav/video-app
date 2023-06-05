@@ -4,6 +4,9 @@ const { v4: uuidv4 } = require("uuid");
 const cors = require("cors");
 const twilio = require("twilio");
 const { disconnect } = require("process");
+const bodyParser = require('body-parser')
+
+const jsonParser = bodyParser.json()
 
 const PORT = process.env.PORT || 5002;
 const app = express();
@@ -14,9 +17,13 @@ app.use(cors());
 let connectedUsers = [];
 let rooms = [];
 
-// create route to check if room exists
-app.get("/api/room-exists/:roomId", (req, res) => {
-  const { roomId } = req.params;
+app.post("/api/v1/meeting/validate", jsonParser, (req, res) => {
+  console.log(req.body);
+  let roomId;
+  if (req && req.body){
+    roomId = req.body.roomId;
+  }
+  console.log(roomId);
   const room = rooms.find((room) => room.id === roomId);
 
   if (room) {
@@ -53,6 +60,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("disconnect", () => {
+    console.log("disconnected");
     disconnectHandler(socket);
   });
 
