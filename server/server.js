@@ -19,8 +19,10 @@ let rooms = [];
 
 app.post("/api/v1/meeting/validate", jsonParser, (req, res) => {
   console.log(req.body);
-  const roomId = req.body.meeting_id;
-  // const meeting_id = data['meeting_id'];
+  let roomId;
+  if (req && req.body){
+    roomId = req.body.roomId;
+  }
   console.log(roomId);
   const room = rooms.find((room) => room.id === roomId);
 
