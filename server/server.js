@@ -75,6 +75,10 @@ io.on("connection", (socket) => {
   socket.on("user-disconnected", (data) => {
     webRTCHandler.removePeerConnection(data);
   });
+
+  socket.on("leave-room", ()=> {
+    disconnectHandler(socket);
+  });
 });
 
 // socket.io handlers
@@ -156,15 +160,17 @@ const disconnectHandler = (socket) => {
     // remove user from room in server
     const room = rooms.find((room) => room.id === user.roomId);
 
-    room.connectedUsers = room.connectedUsers.filter(
-      (user) => user.socketId !== socket.id
-    );
+    if (room && "connectedUsers" in room) {
+      room.connectedUsers = room.connectedUsers.filter(
+        (user) => user.socketId !== socket.id
+      );
+    }
 
     // leave socket io room
     socket.leave(user.roomId);
 
     // close the room if amount of the users which will stay in room will be 0
-    if (room.connectedUsers.length > 0) {
+    if (room && room.connectedUsers.length > 0) {
       // emit to all users which are still in the room that user disconnected
       io.to(room.id).emit("user-disconnected", { socketId: socket.id });
 

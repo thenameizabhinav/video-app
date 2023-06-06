@@ -1,8 +1,10 @@
 import React from "react";
 import { Tooltip, OverlayTrigger } from "react-bootstrap";
+import * as wss from "../../utils/wss";
 
 const LeaveRoomButton = () => {
   const handleRoomDisconnection = () => {
+    wss.leaveRoom();
     const siteUrl = window.location.origin;
     window.location.href = siteUrl;
   };

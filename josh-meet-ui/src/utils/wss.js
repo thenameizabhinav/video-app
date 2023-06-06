@@ -73,3 +73,9 @@ export const joinRoom = (identity, roomId) => {
 export const signalPeerData = (data) => {
   socket.emit("conn-signal", data);
 };
+
+export const leaveRoom = () => {
+  // Emit disconnect event to notify all the meeting users.
+  console.log("Leaving room");
+  socket.emit("leave-room");
+};
