@@ -40,7 +40,7 @@ const NewMessage = () => {
       />
       <OverlayTrigger placement="top" overlay={tooltip}>
         <button className="new_message_button" onClick={sendMessage}>
-          <span class="material-icons">send</span>
+          <span className="material-icons">send</span>
         </button>
       </OverlayTrigger>
     </div>
