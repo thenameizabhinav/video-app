@@ -17,7 +17,7 @@ const LeaveRoomButton = () => {
     <div className="video_button_container">
       <OverlayTrigger placement="top" overlay={tooltip}>
         <button onClick={handleRoomDisconnection} className="video_end_button">
-          <span class="material-icons">call_end</span>
+          <span className="material-icons">call_end</span>
         </button>
       </OverlayTrigger>
     </div>

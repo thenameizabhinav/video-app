@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import JoinRoomInput from "./JoinRoomInput";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import OnlyWithAudioCheckbox from "./OnlyWithAudioCheckbox";
 import {
   setConnectOnlyWithAudio,
   setIdentity,
@@ -14,21 +13,28 @@ import { getRoomExists } from "../utils/api";
 
 const JoinRoomContent = (props) => {
   const navigate = useNavigate();
-  const {
-    isRoomHost,
-    setIdentityAction,
-    setRoomIdAction,
-  } = props;
+  const { isRoomHost, setIdentityAction, setRoomIdAction } = props;
   const [roomIdValue, setRoomIdValue] = useState("");
   const [nameValue, setNameValue] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
 
   const handleJoinRoom = async () => {
-    setIdentityAction(nameValue);
-    if (isRoomHost) {
-      createRoom();
+    if (!isRoomHost && !roomIdValue.trim()) {
+      console.log("test");
+      setErrorMessage("Please enter meeting id");
+    } else if (!isRoomHost && !nameValue.trim()) {
+      setErrorMessage("Please enter your name");
     } else {
-      await joinRoom();
+      setIdentityAction(nameValue);
+      if (isRoomHost) {
+        if (!nameValue.trim()) {
+          setErrorMessage("Please enter your name");
+        } else {
+          createRoom();
+        }
+      } else {
+        await joinRoom();
+      }
     }
   };
 
@@ -39,13 +45,13 @@ const JoinRoomContent = (props) => {
 
     if (roomExists) {
       if (full) {
-        setErrorMessage("Meeting is full. Please Try again later");
+        setErrorMessage("Meeting is full. Please try again later");
       } else {
         setRoomIdAction(roomIdValue);
         navigate("/room");
       }
     } else {
-      setErrorMessage("Meeting Id not found. Check your meeting Id");
+      setErrorMessage("Meeting id not found. Please check your meeting id");
     }
   };
 
@@ -62,7 +68,6 @@ const JoinRoomContent = (props) => {
         setNameValue={setNameValue}
         isRoomHost={isRoomHost}
       />
-
       <ErrorMessage errorMessage={errorMessage} />
       <JoinRoomButtons
         handleJoinRoom={handleJoinRoom}
