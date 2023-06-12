@@ -1,6 +1,6 @@
 import React from "react";
-import ConnectingButton from "./ConnectingButton";
 import { useNavigate } from "react-router-dom";
+import ConnectingButton from "./ConnectingButton";
 
 const ConnectingButtons = () => {
   const navigate = useNavigate();

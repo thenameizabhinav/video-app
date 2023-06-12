@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { setParticipantSection, setChatSection } from "../../store/action";
 import { connect } from "react-redux";
 import { Tooltip, OverlayTrigger } from "react-bootstrap";
@@ -23,6 +23,16 @@ const ParticipantsButton = (props) => {
   const buttonClassName = `video_button ${
     participantButton ? "participant_button_clicked" : ""
   }`;
+
+  useEffect(() => {
+    const videosContainer = document.getElementById("videos_portal");
+    const list = videosContainer.classList;
+    if (participantButton) {
+      list.replace("videos_portal_styles", "videos_portal_styles_80");
+    } else {
+      list.replace("videos_portal_styles_80", "videos_portal_styles");
+    }
+  }, [participantButton]);
 
   return (
     <div className="video_button_container">

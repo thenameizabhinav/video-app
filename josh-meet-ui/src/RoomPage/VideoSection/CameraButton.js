@@ -22,17 +22,7 @@ const CameraButton = () => {
 
   return (
     <div className="video_button_container">
-      <OverlayTrigger
-        placement="top"
-        overlay={tooltip}
-        popperConfig={{
-          modifiers: {
-            preventOverflow: {
-              enabled: false,
-            },
-          },
-        }}
-      >
+      <OverlayTrigger placement="top" overlay={tooltip}>
         <button onClick={handleCameraButtonPressed} className={buttonClassName}>
           {!isLocalVideoDisable ? (
             <span className="material-icons">videocam</span>

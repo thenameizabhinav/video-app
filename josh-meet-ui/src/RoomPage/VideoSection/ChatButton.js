@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { setChatSection } from "../../store/action";
 import { setParticipantSection } from "../../store/action";
 import { connect } from "react-redux";
@@ -27,6 +27,16 @@ const ChatButton = (props) => {
   const buttonClassName = `video_button ${
     chatButton ? "chat_button_clicked" : ""
   }`;
+
+  useEffect(() => {
+    const videosContainer = document.getElementById("videos_portal");
+    const list = videosContainer.classList;
+    if (chatButton) {
+      list.replace("videos_portal_styles", "videos_portal_styles_80");
+    } else {
+      list.replace("videos_portal_styles_80", "videos_portal_styles");
+    }
+  }, [chatButton]);
 
   return (
     <div className="video_button_container">

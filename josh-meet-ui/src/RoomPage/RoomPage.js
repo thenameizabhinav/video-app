@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
-import "./RoomPage.css";
+import { connect } from "react-redux";
 import VideoButtons from "./VideoSection/VideoButtons.js";
 import ParticipantsSection from "./ParticipantsSection/ParticipantsSection";
 import ChatSection from "./ChatSection/ChatSection";
 import RoomLabel from "./RoomLabel";
-import { connect } from "react-redux";
 import * as webRTCHandler from "../utils/webRTCHandler.js";
 import Overlay from "./Overlay";
+import "./RoomPage.css";
 
 const RoomPage = ({
   roomId,
@@ -16,6 +16,7 @@ const RoomPage = ({
   chatSection,
   participantSection,
 }) => {
+  
   if (!isRoomHost && !roomId) {
     const siteUrl = window.location.origin;
     window.location.href = siteUrl;

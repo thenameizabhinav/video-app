@@ -20,7 +20,6 @@ const JoinRoomContent = (props) => {
 
   const handleJoinRoom = async () => {
     if (!isRoomHost && !roomIdValue.trim()) {
-      console.log("test");
       setErrorMessage("Please enter meeting id");
     } else if (!isRoomHost && !nameValue.trim()) {
       setErrorMessage("Please enter your name");
