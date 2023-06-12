@@ -11,28 +11,45 @@ const defaultConstraints = {
   video: true,
 };
 
-let localStream;
+let localStream = null;
+
+async function getMedia(isRoomHost, identity, roomId) {
+  try {
+    localStream = await navigator.mediaDevices.getUserMedia(defaultConstraints);
+    console.log("successfully got the local stream");
+    showLocalVideoPreview(localStream);
+    store.dispatch(setShowOverlay(false));
+    isRoomHost ? wss.createNewRoom(identity) : wss.joinRoom(identity, roomId);
+  } catch (err) {
+    console.log(
+      "error occured when trying to get an access to local stream --> ",
+      err
+    );
+  }
+}
 
 export const getLocalPreviewandInitRoomConnection = async (
   isRoomHost,
   identity,
   roomId = null
 ) => {
-  navigator.mediaDevices
-    .getUserMedia(defaultConstraints)
-    .then((stream) => {
-      console.log("successfully got the local stream");
-      localStream = stream;
-      showLocalVideoPreview(localStream);
-      store.dispatch(setShowOverlay(false));
-      isRoomHost ? wss.createNewRoom(identity) : wss.joinRoom(identity, roomId);
-    })
-    .catch((err) => {
-      console.log(
-        "error occured when trying to get an access to local stream",
-        err
-      );
-    });
+  getMedia(isRoomHost, identity, roomId);
+
+  // navigator.mediaDevices
+  //   .getUserMedia(defaultConstraints)
+  //   .then((stream) => {
+  //     console.log("successfully got the local stream");
+  //     localStream = stream;
+  //     showLocalVideoPreview(localStream);
+  //     store.dispatch(setShowOverlay(false));
+  //     isRoomHost ? wss.createNewRoom(identity) : wss.joinRoom(identity, roomId);
+  //   })
+  //   .catch((err) => {
+  //     console.log(
+  //       "error occured when trying to get an access to local stream",
+  //       err
+  //     );
+  //   });
 };
 
 let peers = {};
@@ -84,7 +101,6 @@ const messengerChannel = "messenger";
 
 export const prepareNewPeerConnection = (connUserSocketId, isInitiator) => {
   const configuration = getConfiguration();
-
   peers[connUserSocketId] = new SimplePeer({
     initiator: isInitiator,
     config: configuration,
@@ -92,9 +108,9 @@ export const prepareNewPeerConnection = (connUserSocketId, isInitiator) => {
     channelName: messengerChannel,
   });
 
+
   peers[connUserSocketId].on("signal", (data) => {
     //webRTC offer, webRTC answer (SDP information), ice candidates
-
     const signalData = {
       signal: data,
       connUserSocketId: connUserSocketId,
@@ -168,7 +184,7 @@ const addStream = (stream, connUserSocketId) => {
   const videoContainer = document.createElement("div");
   videoContainer.id = connUserSocketId;
 
-  videoContainer.classList.add("video_track_container");
+  videoContainer.classList.add("video_track_container");  
   const videoElement = document.createElement("video");
   videoElement.autoplay = true;
   videoElement.srcObject = stream;

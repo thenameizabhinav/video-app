@@ -13,7 +13,7 @@ code {
 }
 
 .videos_portal_styles {
-  width: 80%;
+  width: 100%;
   height: calc(100vh - 10%);
   left: 0;
   top: 0;
@@ -22,6 +22,18 @@ code {
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
+}
+
+.videos_portal_styles_80 {
+    width: 80%;
+    height: calc(100vh - 10%);
+    left: 0;
+    top: 0;
+    position: absolute;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
 }
 
 
