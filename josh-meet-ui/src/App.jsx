@@ -5,8 +5,8 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import JoinRoomPage from "./JoinRoomPage/JoinRoomPage";
-import RoomPage from "./RoomPage/RoomPage";
+import JoinRoomPage from "./JoinRoomPage";
+import RoomPage from "./RoomPage";
 import IntroductionPage from "./Dashboard";
 import { connectWithSocketIOServer } from "./utils/wss";
 

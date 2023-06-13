@@ -2,8 +2,8 @@ import axios from "axios";
 
 const IP = window.location.hostname;
 console.log(IP);
-const serverApi = `http://${IP}:5002/api/v1`;
-// const serverApi = `https://${IP}/api/v1`;
+//const serverApi = `http://${IP}:5002/api/v1`;
+ const serverApi = `https://${IP}/api/v1`;
 
 export const getRoomExists = async (roomId) => {
   // const response = await axios.get(`${serverApi}/room-exists/${roomId}`);

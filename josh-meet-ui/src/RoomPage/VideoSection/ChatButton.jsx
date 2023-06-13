@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { setChatSection } from "../../store/action";
-import { setParticipantSection } from "../../store/action";
 import { connect } from "react-redux";
 import { Tooltip, OverlayTrigger } from "react-bootstrap";
+import { setChatSection } from "../../store/action";
+import { setParticipantSection } from "../../store/action";
 
 const ChatButton = (props) => {
   const {

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import * as webRTCHandler from "../../utils/webRTCHandler";
-import LocalScreenSharingPreview from "./LocalScreenSharingPreview";
 import { Tooltip, OverlayTrigger } from "react-bootstrap";
+import * as webRTCHandler from "../../utils/webRTCHandler";
 
 const constraints = {
   audio: true,

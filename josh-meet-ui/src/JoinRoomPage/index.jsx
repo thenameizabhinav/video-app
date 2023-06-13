@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { setIsRoomHost } from "../store/action";
 import JoinRoomTitle from "./JoinRoomTitle";
 import JoinRoomContent from "./JoinRoomContent";
+import "./joinRoomPage.css";
 
 const JoinRoomPage = (props) => {
   const { setIsRoomHostAction, isRoomHost } = props;

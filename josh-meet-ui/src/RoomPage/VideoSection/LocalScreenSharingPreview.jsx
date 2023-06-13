@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from "react";
-import "../RoomPage.css";
+import "../roomPage.css";
 
 const LocalScreenSharingPreview = ({ stream }) => {
   const localPreviewRef = useRef();
@@ -10,14 +10,10 @@ const LocalScreenSharingPreview = ({ stream }) => {
       video.play();
     };
   }, [stream]);
-  
+
   return (
     <div className="local_screen_share_preview">
-      <video
-        muted
-        autoPlay
-        ref={localPreviewRef}
-      ></video>
+      <video muted autoPlay ref={localPreviewRef}></video>
     </div>
   );
 };

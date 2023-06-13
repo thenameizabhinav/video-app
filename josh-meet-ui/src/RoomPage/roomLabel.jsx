@@ -3,7 +3,7 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import Button from "react-bootstrap/Button";
 import Toast from "react-bootstrap/Toast";
 import ToastContainer from "react-bootstrap/ToastContainer";
-import "./RoomPage.css";
+import "./roomPage.css";
 
 const RoomLabel = ({ roomId }) => {
   const [showToast, setShowToast] = useState(true);

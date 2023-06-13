@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import * as webRTCHandler from "../../utils/webRTCHandler";
 import { Tooltip, OverlayTrigger } from "react-bootstrap";
+import * as webRTCHandler from "../../utils/webRTCHandler";
 
 const CameraButton = () => {
   const [isLocalVideoDisable, setIsLocalVideoDisabled] = useState(false);

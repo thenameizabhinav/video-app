@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { setParticipantSection, setChatSection } from "../../store/action";
 import { connect } from "react-redux";
 import { Tooltip, OverlayTrigger } from "react-bootstrap";
+import { setParticipantSection, setChatSection } from "../../store/action";
 
 const ParticipantsButton = (props) => {
   const { setPartcipantSectionAction, setChatSectionAction, chatSection } =

@@ -1,5 +1,5 @@
 import React from "react";
-import "./JoinRoomPage.css";
+import "./joinRoomPage.css";
 
 const JoinRoomTitle = ({ isRoomHost }) => {
   const titleText = isRoomHost ? "Host meeting" : "Join meeting";
