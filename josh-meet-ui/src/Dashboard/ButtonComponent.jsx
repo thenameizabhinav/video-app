@@ -1,6 +1,7 @@
 import React from "react";
+import { Button } from "react-bootstrap";
 
-const ConnectingButton = ({
+const ButtonComponent = ({
   createRoomButton = false,
   buttonText,
   onClickHandler,
@@ -10,10 +11,10 @@ const ConnectingButton = ({
     : "join_room_button";
 
   return (
-    <button className={buttonClass} onClick={onClickHandler}>
+    <Button className={buttonClass} onClick={onClickHandler}>
       {buttonText}
-    </button>
+    </Button>
   );
 };
 
-export default ConnectingButton;
+export default ButtonComponent;

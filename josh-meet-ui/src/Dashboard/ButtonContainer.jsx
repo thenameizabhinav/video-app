@@ -1,8 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import ConnectingButton from "./ConnectingButton";
+import ButtonComponent from "./ButtonComponent";
 
-const ConnectingButtons = () => {
+const ButtonContainer = () => {
   const navigate = useNavigate();
 
   const joinMeetingButtonHandler = () => {
@@ -12,13 +12,14 @@ const ConnectingButtons = () => {
   const createMeetingButtonHandler = () => {
     navigate("/join-room?host=true");
   };
+
   return (
     <div className="connecting_buttons_container">
-      <ConnectingButton
+      <ButtonComponent
         buttonText="Join a meeting"
         onClickHandler={joinMeetingButtonHandler}
       />
-      <ConnectingButton
+      <ButtonComponent
         createRoomButton
         buttonText="Create a meeting"
         onClickHandler={createMeetingButtonHandler}
@@ -27,4 +28,4 @@ const ConnectingButtons = () => {
   );
 };
 
-export default ConnectingButtons;
+export default ButtonContainer;

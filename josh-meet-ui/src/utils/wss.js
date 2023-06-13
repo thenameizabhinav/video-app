@@ -4,8 +4,8 @@ import { setRoomId, setParticipants } from "../store/action";
 import * as webRTCHandler from "./webRTCHandler";
 
 const IP = window.location.hostname;
-//const SERVER = `http://${IP}:5002`;
- const SERVER = `https://${IP}`;
+const SERVER = `http://${IP}:5002`;
+// const SERVER = `https://${IP}`;
 
 let socket = null;
 
@@ -48,7 +48,6 @@ export const connectWithSocketIOServer = () => {
   socket.on("user-disconnected", (data) => {
     webRTCHandler.removePeerConnection(data);
   });
-  
 };
 
 export const createNewRoom = (identity) => {

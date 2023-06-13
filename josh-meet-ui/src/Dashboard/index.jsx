@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
-import "./IntroductionPage.css";
-import ConnectingButtons from "./ConnectingButtons";
-import { setIsRoomHost } from "../store/action";
 import { connect } from "react-redux";
+import ButtonContainer from "./ButtonContainer";
+import { setIsRoomHost } from "../store/action";
+import "./dashboard.css";
 
-const IntroductionPage = ({ setIsRoomHostAction }) => {
+const Dashboard = ({ setIsRoomHostAction }) => {
   useEffect(() => {
     setIsRoomHostAction(false);
   }, []);
@@ -13,7 +13,7 @@ const IntroductionPage = ({ setIsRoomHostAction }) => {
     <div className="introduction_page_container">
       <div className="introduction_page_panel">
         <h1>Josh Meet</h1>
-        <ConnectingButtons />
+        <ButtonContainer />
       </div>
     </div>
   );
@@ -25,4 +25,4 @@ const mapActionsToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapActionsToProps)(IntroductionPage);
+export default connect(null, mapActionsToProps)(Dashboard);
