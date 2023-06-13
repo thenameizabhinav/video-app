@@ -108,7 +108,6 @@ export const prepareNewPeerConnection = (connUserSocketId, isInitiator) => {
     channelName: messengerChannel,
   });
 
-
   peers[connUserSocketId].on("signal", (data) => {
     //webRTC offer, webRTC answer (SDP information), ice candidates
     const signalData = {
@@ -162,10 +161,14 @@ export const removePeerConnection = (data) => {
 
 const showLocalVideoPreview = (stream) => {
   //UI
+  // div -> video
   const videosContainer = document.getElementById("videos_portal");
   videosContainer.classList.add("videos_portal_styles");
   const videoContainer = document.createElement("div");
   videoContainer.classList.add("video_track_container");
+  const labelElement = document.createElement("label");
+  labelElement.classList.add("title_label");
+  labelElement.innerText = "You";
   const videoElement = document.createElement("video");
   videoElement.autoplay = true;
   videoElement.muted = true;
@@ -174,18 +177,28 @@ const showLocalVideoPreview = (stream) => {
   videoElement.onloadedmetadata = () => {
     videoElement.play();
   };
+
+  videoContainer.appendChild(labelElement);
   videoContainer.appendChild(videoElement);
   videosContainer.appendChild(videoContainer);
 };
 
 const addStream = (stream, connUserSocketId) => {
   //display incoming stream
+  const userList = store.getState().participants;
   const videosContainer = document.getElementById("videos_portal");
   const videoContainer = document.createElement("div");
   videoContainer.id = connUserSocketId;
 
-  videoContainer.classList.add("video_track_container");  
+  videoContainer.classList.add("video_track_container");
   const videoElement = document.createElement("video");
+  videoElement.classList.add("video_element");
+  const labelElement = document.createElement("label");
+  labelElement.classList.add("title_label");
+  const nameArray = userList.filter(
+    (user) => user.socketId === connUserSocketId
+  );
+  labelElement.innerText = nameArray[0].identity;
   videoElement.autoplay = true;
   videoElement.srcObject = stream;
   videoElement.id = `${connUserSocketId}-video`;
@@ -201,6 +214,8 @@ const addStream = (stream, connUserSocketId) => {
       videoElement.classList.add("full_screen");
     }
   });
+
+  videoContainer.appendChild(labelElement);
   videoContainer.appendChild(videoElement);
   videoContainer.style.position = "static";
   videosContainer.appendChild(videoContainer);
