@@ -1,5 +1,5 @@
 import React from "react";
-
+import { CHAT } from "../../utils/constants";
 const ChatLabel = () => {
   return (
     <div className="chat_label_container">

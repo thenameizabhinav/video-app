@@ -3,9 +3,35 @@ import { connect } from "react-redux";
 
 const SingleParticipant = (props) => {
   const { identity, lastItem, participant } = props;
+  let avatar = "";
+  // get the value of avatar name.
+  identity.split(" ").forEach((x, index) => {
+    if (x && index <= 1) {
+      avatar = avatar + x[0].toLocaleUpperCase();
+    }
+  });
   return (
     <>
-      <p className="participants_paragraph">{identity}</p>
+      <div className="participant-wrapper">
+        <div className="participant-info">
+          <span className="participant-avatar">{avatar}</span>
+          <p className="participants-paragraph">{identity}</p>
+        </div>
+        <div class="participant-options">
+          <div className="participant-mic">
+            <button className="mic-button button-without-style">
+              <span className="material-icons">mic_off</span>
+            </button>
+          </div>
+          <div className="participant-more">
+            <span>
+              <button className="button-without-style">
+                <span className="material-icons">more_vert</span>
+              </button>
+            </span>
+          </div>
+        </div>
+      </div>
       {!lastItem && <span className="participants_separator_line"></span>}
     </>
   );
