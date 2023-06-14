@@ -16,6 +16,7 @@ async function getMedia(isRoomHost, identity, roomId) {
     console.log("successfully got the local stream");
     showLocalVideoPreview(localStream);
     store.dispatch(setShowOverlay(false));
+    let audioEnabled, videoEnabled;
     isRoomHost
       ? wss.createNewRoom(
           identity,
@@ -217,12 +218,12 @@ const addStream = (stream, connUserSocketId) => {
 
 export const toggleMic = (isMuted) => {
   localStream.getAudioTracks()[0].enabled = isMuted ? true : false;
-  wss.userMediaUpdate();
+  wss.userMediaUpdate(localStream.getAudioTracks()[0].enabled, null);
 };
 
 export const toggleCamera = (isDisabled) => {
   localStream.getVideoTracks()[0].enabled = isDisabled ? true : false;
-  wss.userMediaUpdate();
+  wss.userMediaUpdate(null, localStream.getVideoTracks()[0].enabled);
 };
 
 export const toggleScreenShare = (

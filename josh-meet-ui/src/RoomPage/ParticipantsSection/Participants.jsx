@@ -1,8 +1,10 @@
 import React from "react";
+import { Tooltip, OverlayTrigger } from "react-bootstrap";
 import { connect } from "react-redux";
+import * as wss from "../../utils/wss";
 
 const SingleParticipant = (props) => {
-  const { identity, lastItem, participant } = props;
+  const { identity, lastItem, participant, audioEnabled } = props;
   let avatar = "";
   // get the value of avatar name.
   identity.split(" ").forEach((x, index) => {
@@ -10,6 +12,21 @@ const SingleParticipant = (props) => {
       avatar = avatar + x[0].toLocaleUpperCase();
     }
   });
+
+  const handleMicButtonPressed = () => {
+    if (audioEnabled) {
+      console.log("Muting user " + participant.socketId);
+      wss.muteUser(participant.socketId, true);
+    } else {
+      console.log("Cannot unmute " + participant.socketId);
+    }
+  };
+
+  const tooltip = (
+    <Tooltip id="tooltip">
+      <strong>{audioEnabled ? "Mute user" : "Cannot unmute a user"}</strong>
+    </Tooltip>
+  );
 
   return (
     <>
@@ -20,9 +37,15 @@ const SingleParticipant = (props) => {
         </div>
         <div className="participant-options">
           <div className="participant-mic">
-            <button className="mic-button button-without-style">
-              <span className="material-icons">mic_off</span>
-            </button>
+            <OverlayTrigger placement="top" overlay={tooltip}>
+              <button className="mic-button button-without-style" onClick={handleMicButtonPressed} disabled={!audioEnabled}>
+                {audioEnabled ? (
+                <span className="material-icons">mic</span>
+                ) : (
+                  <span className="material-icons">mic_off</span>
+                )}
+              </button>
+            </OverlayTrigger>
           </div>
           <div className="participant-more">
             <span>
@@ -48,6 +71,7 @@ const Participants = ({ participants }) => {
             lastItem={participants.length === index + 1}
             participant={participant}
             identity={participant.identity}
+            audioEnabled={participant.audioEnabled}
           />
         );
       })}
