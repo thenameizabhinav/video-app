@@ -17,6 +17,7 @@ const ChatButton = (props) => {
     setChatButton(!chatButton);
     if (participantSection) setPartcipantSectionAction(!participantSection);
     setChatSectionAction(!chatButton);
+    
   };
 
   const tooltip = (

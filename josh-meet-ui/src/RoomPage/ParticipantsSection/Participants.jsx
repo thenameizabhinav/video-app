@@ -10,6 +10,7 @@ const SingleParticipant = (props) => {
       avatar = avatar + x[0].toLocaleUpperCase();
     }
   });
+
   return (
     <>
       <div className="participant-wrapper">
@@ -17,7 +18,7 @@ const SingleParticipant = (props) => {
           <span className="participant-avatar">{avatar}</span>
           <p className="participants-paragraph">{identity}</p>
         </div>
-        <div class="participant-options">
+        <div className="participant-options">
           <div className="participant-mic">
             <button className="mic-button button-without-style">
               <span className="material-icons">mic_off</span>
