@@ -1,5 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
+import {
+  MESSAGE_ALIGN_LEFT,
+  MESSAGE_ALIGN_RIGHT,
+  MESSAGE_LEFT_STYLES,
+  MESSAGE_RIGHT_STYLES,
+} from "../../utils/constants";
 
 const Message = ({
   key,
@@ -10,13 +16,12 @@ const Message = ({
   chatTime,
 }) => {
   const alignClass = messageCreatedByMe
-    ? "message_align_right"
-    : "message_align_left";
+    ? MESSAGE_ALIGN_RIGHT
+    : MESSAGE_ALIGN_LEFT;
   const authorText = messageCreatedByMe ? "You" : author;
   const contentAdditionalStyles = messageCreatedByMe
-    ? "message_right_styles"
-    : "message_left_styles";
-
+    ? MESSAGE_RIGHT_STYLES
+    : MESSAGE_LEFT_STYLES;
 
   return (
     <div className={`message_container ${alignClass}`}>

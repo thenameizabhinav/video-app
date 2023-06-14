@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Tooltip, OverlayTrigger } from "react-bootstrap";
 import { setChatSection } from "../../store/action";
 import { setParticipantSection } from "../../store/action";
+import { CHAT_WITH_EVERYONE } from "../../utils/constants";
 
 const ChatButton = (props) => {
   const {
@@ -20,7 +21,7 @@ const ChatButton = (props) => {
 
   const tooltip = (
     <Tooltip id="tooltip" style={{ position: "fixed" }}>
-      <strong>Chat with everyone</strong>
+      <strong>{CHAT_WITH_EVERYONE}</strong>
     </Tooltip>
   );
 

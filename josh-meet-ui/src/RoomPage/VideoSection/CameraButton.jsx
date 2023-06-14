@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Tooltip, OverlayTrigger } from "react-bootstrap";
 import * as webRTCHandler from "../../utils/webRTCHandler";
+import { TURN_ON_CAMERA, TURN_OFF_CAMERA } from "../../utils/constants";
 
 const CameraButton = () => {
   const [isLocalVideoDisable, setIsLocalVideoDisabled] = useState(false);
@@ -14,9 +15,7 @@ const CameraButton = () => {
 
   const tooltip = (
     <Tooltip id="tooltip" style={{ position: "fixed" }}>
-      <strong>
-        {isLocalVideoDisable ? "Turn on camera" : "Turn off camera"}
-      </strong>
+      <strong>{isLocalVideoDisable ? TURN_ON_CAMERA : TURN_OFF_CAMERA}</strong>
     </Tooltip>
   );
 

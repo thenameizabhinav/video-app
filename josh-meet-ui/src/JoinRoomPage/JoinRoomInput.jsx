@@ -1,4 +1,5 @@
 import React from "react";
+import { ENTER_MEETING_ID, ENTER_YOUR_NAME } from "../utils/constants";
 
 const Input = ({ placeholder, value, onChangeHandler }) => {
   return (
@@ -26,13 +27,13 @@ const JoinRoomInput = (props) => {
     <div className="join_room_inputs_container">
       {!isRoomHost && (
         <Input
-          placeholder="Enter meeting Id"
+          placeholder={ENTER_MEETING_ID}
           value={roomIdValue}
           onChangeHandler={handleRoomIdValueChange}
         />
       )}
       <Input
-        placeholder="Enter your name"
+        placeholder={ENTER_YOUR_NAME}
         value={nameValue}
         onChangeHandler={handleNameValueChange}
       />

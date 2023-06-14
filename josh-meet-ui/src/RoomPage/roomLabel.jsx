@@ -3,6 +3,7 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import Button from "react-bootstrap/Button";
 import Toast from "react-bootstrap/Toast";
 import ToastContainer from "react-bootstrap/ToastContainer";
+import { MEETING_ID_CLICK_THE_BELOW_ID_TO_COPY } from "../utils/constants";
 import "./roomPage.css";
 
 const RoomLabel = ({ roomId }) => {
@@ -21,7 +22,7 @@ const RoomLabel = ({ roomId }) => {
       >
         <Toast.Header>
           <strong className="me-auto">
-            Meeting Id: Click the below ID to copy
+            {MEETING_ID_CLICK_THE_BELOW_ID_TO_COPY}
           </strong>
         </Toast.Header>
         <Toast.Body className="text-white">

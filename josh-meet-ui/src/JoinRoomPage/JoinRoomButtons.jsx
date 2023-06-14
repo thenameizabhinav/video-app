@@ -1,6 +1,12 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "react-bootstrap";
+import {
+  JOIN,
+  JOIN_ROOM_CANCEL_BUTTON,
+  JOIN_ROOM_SUCCESS_BUTTON,
+  HOST,
+} from "../utils/constants";
 
 const ButtonComponent = ({
   buttonText,
@@ -8,11 +14,15 @@ const ButtonComponent = ({
   onClickHandler,
 }) => {
   const buttonClass = cancelButton
-    ? "join_room_cancel_button"
-    : "join_room_success_button";
+    ? JOIN_ROOM_CANCEL_BUTTON
+    : JOIN_ROOM_SUCCESS_BUTTON;
 
   return (
-    <Button className={buttonClass} onClick={onClickHandler}>
+    <Button
+      variant={cancelButton ? "danger" : "success"}
+      className={buttonClass}
+      onClick={onClickHandler}
+    >
       {buttonText}
     </Button>
   );
@@ -20,7 +30,7 @@ const ButtonComponent = ({
 
 const JoinRoomButtons = ({ handleJoinRoom, isRoomHost }) => {
   const navigate = useNavigate();
-  const successButtonText = isRoomHost ? "Host" : "Join";
+  const successButtonText = isRoomHost ? HOST : JOIN;
 
   const pushToIntroductionPage = () => {
     navigate("/");

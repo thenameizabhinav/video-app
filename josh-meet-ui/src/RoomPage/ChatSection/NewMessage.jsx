@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Tooltip, OverlayTrigger } from "react-bootstrap";
 import * as webRTCHandler from "../../utils/webRTCHandler";
+import { SEND_A_MESSAGE } from "../../utils/constants";
 
 const NewMessage = () => {
   const [message, setMessage] = useState("");
@@ -35,7 +36,7 @@ const NewMessage = () => {
         className="new_message_input"
         value={message}
         onChange={handleTextChange}
-        placeholder="Send a message"
+        placeholder={SEND_A_MESSAGE}
         type="text"
         onKeyDown={handleKeyPressed}
       />

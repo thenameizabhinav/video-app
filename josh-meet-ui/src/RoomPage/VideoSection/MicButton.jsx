@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Tooltip, OverlayTrigger } from "react-bootstrap";
 import * as webRTCHandler from "../../utils/webRTCHandler";
+import { TURN_OFF_MICROPHONE, TURN_ON_MICROPHONE } from "../../utils/constants";
 
 const MicButton = () => {
   const [isMicMuted, setIsMicMuted] = useState(false);
@@ -16,9 +17,7 @@ const MicButton = () => {
 
   const tooltip = (
     <Tooltip id="tooltip" style={{ position: "fixed" }}>
-      <strong>
-        {isMicMuted ? "Turn on microphone" : "Turn off microphone"}
-      </strong>
+      <strong>{isMicMuted ? TURN_ON_MICROPHONE : TURN_OFF_MICROPHONE}</strong>
     </Tooltip>
   );
 

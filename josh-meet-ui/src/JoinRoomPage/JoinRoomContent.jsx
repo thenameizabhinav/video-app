@@ -10,6 +10,12 @@ import {
 import ErrorMessage from "./ErrorMessage";
 import JoinRoomButtons from "./JoinRoomButtons";
 import { getRoomExists } from "../utils/api";
+import {
+  MEETING_ID_NOT_FOUND_PLEASE_CHECK_YOUR_MEETING_ID,
+  MEETING_IS_FULL_PLEASE_TRY_AGAIN_LATER,
+  PLEASE_ENTER_MEETING_ID,
+  PLEASE_ENTER_YOUR_NAME,
+} from "../utils/constants";
 
 const JoinRoomContent = (props) => {
   const navigate = useNavigate();
@@ -20,14 +26,14 @@ const JoinRoomContent = (props) => {
 
   const handleJoinRoom = async () => {
     if (!isRoomHost && !roomIdValue.trim()) {
-      setErrorMessage("Please enter meeting id");
+      setErrorMessage(PLEASE_ENTER_MEETING_ID);
     } else if (!isRoomHost && !nameValue.trim()) {
-      setErrorMessage("Please enter your name");
+      setErrorMessage(PLEASE_ENTER_YOUR_NAME);
     } else {
       setIdentityAction(nameValue);
       if (isRoomHost) {
         if (!nameValue.trim()) {
-          setErrorMessage("Please enter your name");
+          setErrorMessage(PLEASE_ENTER_YOUR_NAME);
         } else {
           createRoom();
         }
@@ -44,13 +50,13 @@ const JoinRoomContent = (props) => {
 
     if (roomExists) {
       if (full) {
-        setErrorMessage("Meeting is full. Please try again later");
+        setErrorMessage(MEETING_IS_FULL_PLEASE_TRY_AGAIN_LATER);
       } else {
         setRoomIdAction(roomIdValue);
         navigate("/room");
       }
     } else {
-      setErrorMessage("Meeting id not found. Please check your meeting id");
+      setErrorMessage(MEETING_ID_NOT_FOUND_PLEASE_CHECK_YOUR_MEETING_ID);
     }
   };
 
