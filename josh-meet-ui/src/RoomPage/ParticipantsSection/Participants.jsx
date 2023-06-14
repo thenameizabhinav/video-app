@@ -23,7 +23,7 @@ const SingleParticipant = (props) => {
   };
 
   const tooltip = (
-    <Tooltip id="tooltip">
+    <Tooltip id="tooltip" style={{ position: "fixed" }}>
       <strong>{audioEnabled ? "Mute user" : "Cannot unmute a user"}</strong>
     </Tooltip>
   );
