@@ -6,7 +6,6 @@ import * as webRTCHandler from "./webRTCHandler";
 const IP = window.location.hostname;
 // const SERVER = `http://${IP}:5002`;
 const SERVER = `https://${IP}`;
-
 let socket = null;
 
 export const connectWithSocketIOServer = () => {
@@ -50,20 +49,24 @@ export const connectWithSocketIOServer = () => {
   });
 };
 
-export const createNewRoom = (identity) => {
+export const createNewRoom = (identity, audioEnabled, videoEnabled) => {
   //emit an event to server that we would like to create new room
   const data = {
     identity,
+    audioEnabled,
+    videoEnabled,
   };
   socket.emit("create-new-room", data);
 };
 
-export const joinRoom = (identity, roomId) => {
+export const joinRoom = (identity, audioEnabled, videoEnabled, roomId) => {
   //emit an event ti server that we would want to join a room
 
   const data = {
     roomId,
     identity,
+    audioEnabled,
+    videoEnabled,
   };
 
   socket.emit("join-room", data);
@@ -71,4 +74,8 @@ export const joinRoom = (identity, roomId) => {
 
 export const signalPeerData = (data) => {
   socket.emit("conn-signal", data);
+};
+
+export const userMediaUpdate = () => {
+  socket.emit("user-media-update", "Abhinav");
 };

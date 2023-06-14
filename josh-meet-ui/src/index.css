@@ -33,6 +33,7 @@ body {
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
+  transition: width 0.5s;
 }
 
 .videos_portal_styles_80 {
@@ -45,6 +46,7 @@ body {
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
+    transition: width 0.5s;
 }
 
 

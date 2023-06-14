@@ -1,11 +1,8 @@
 import { setShowOverlay, setMessages } from "../store/action";
 import store from "../store/store";
 import * as wss from "./wss";
-// import {SimplePeer} from "./simplepeer.min.js";
-const SimplePeer = window.SimplePeer;
-// import SimplePeer from SimplePeer;
-// import Peer from "simple-peer";
 
+const SimplePeer = window.SimplePeer;
 const defaultConstraints = {
   audio: true,
   video: true,
@@ -19,7 +16,18 @@ async function getMedia(isRoomHost, identity, roomId) {
     console.log("successfully got the local stream");
     showLocalVideoPreview(localStream);
     store.dispatch(setShowOverlay(false));
-    isRoomHost ? wss.createNewRoom(identity) : wss.joinRoom(identity, roomId);
+    isRoomHost
+      ? wss.createNewRoom(
+          identity,
+          (audioEnabled = true),
+          (videoEnabled = true)
+        )
+      : wss.joinRoom(
+          identity,
+          (audioEnabled = true),
+          (videoEnabled = true),
+          roomId
+        );
   } catch (err) {
     console.log(
       "error occured when trying to get an access to local stream --> ",
@@ -34,22 +42,6 @@ export const getLocalPreviewandInitRoomConnection = async (
   roomId = null
 ) => {
   getMedia(isRoomHost, identity, roomId);
-
-  // navigator.mediaDevices
-  //   .getUserMedia(defaultConstraints)
-  //   .then((stream) => {
-  //     console.log("successfully got the local stream");
-  //     localStream = stream;
-  //     showLocalVideoPreview(localStream);
-  //     store.dispatch(setShowOverlay(false));
-  //     isRoomHost ? wss.createNewRoom(identity) : wss.joinRoom(identity, roomId);
-  //   })
-  //   .catch((err) => {
-  //     console.log(
-  //       "error occured when trying to get an access to local stream",
-  //       err
-  //     );
-  //   });
 };
 
 let peers = {};
@@ -161,7 +153,6 @@ export const removePeerConnection = (data) => {
 
 const showLocalVideoPreview = (stream) => {
   //UI
-  // div -> video
   const videosContainer = document.getElementById("videos_portal");
   videosContainer.classList.add("videos_portal_styles");
   const videoContainer = document.createElement("div");
@@ -185,6 +176,7 @@ const showLocalVideoPreview = (stream) => {
 
 const addStream = (stream, connUserSocketId) => {
   //display incoming stream
+  console.log(stream);
   const userList = store.getState().participants;
   const videosContainer = document.getElementById("videos_portal");
   const videoContainer = document.createElement("div");
@@ -225,10 +217,12 @@ const addStream = (stream, connUserSocketId) => {
 
 export const toggleMic = (isMuted) => {
   localStream.getAudioTracks()[0].enabled = isMuted ? true : false;
+  wss.userMediaUpdate();
 };
 
 export const toggleCamera = (isDisabled) => {
   localStream.getVideoTracks()[0].enabled = isDisabled ? true : false;
+  wss.userMediaUpdate();
 };
 
 export const toggleScreenShare = (
