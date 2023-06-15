@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
+import { history } from "../App";
 import VideoButtons from "./VideoSection/VideoButtons";
 import ParticipantsSection from "./ParticipantsSection/ParticipantsSection";
 import ChatSection from "./ChatSection/ChatSection";
@@ -28,6 +29,17 @@ const RoomPage = ({
       );
     }, []);
   }
+
+  useEffect(() => {
+    window.addEventListener(
+      "popstate",
+      function (event) {
+        const siteUrl = window.location.origin;
+        window.location.href = siteUrl;
+      },
+      false
+    );
+  }, []);
 
   return (
     <div className="room_container">
