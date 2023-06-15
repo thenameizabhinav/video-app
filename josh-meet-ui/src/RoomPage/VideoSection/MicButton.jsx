@@ -24,7 +24,7 @@ const MicButton = () => {
   return (
     <div className="video_button_container">
       <OverlayTrigger placement="top" overlay={tooltip}>
-        <button onClick={handleMicButtonPressed} className={buttonClassName}>
+        <button id="mute-button" onClick={handleMicButtonPressed} className={buttonClassName}>
           {!isMicMuted ? (
             <span className="material-icons">mic</span>
           ) : (

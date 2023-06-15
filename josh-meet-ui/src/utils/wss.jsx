@@ -47,6 +47,13 @@ export const connectWithSocketIOServer = () => {
   socket.on("user-disconnected", (data) => {
     webRTCHandler.removePeerConnection(data);
   });
+
+  socket.on("mute-local", (data) => {
+    const { mutedBy } = data;
+    console.log("You have been muted by:" + mutedBy);
+    // Click on Mute button.
+    document.getElementById('mute-button')?.click();
+  });
 };
 
 export const createNewRoom = (identity, audioEnabled, videoEnabled) => {
@@ -76,6 +83,18 @@ export const signalPeerData = (data) => {
   socket.emit("conn-signal", data);
 };
 
-export const userMediaUpdate = () => {
-  socket.emit("user-media-update", "Abhinav");
+export const userMediaUpdate = (audioEnabled, videoEnabled) => {
+  let data = {
+    audioEnabled,
+    videoEnabled
+  };
+  socket.emit("user-media-update", data);
+};
+
+export const muteUser = (sessionId, disableAudio) => {
+  const data = {
+    sessionId,
+    disableAudio
+  };
+  socket.emit("mute-user", data);
 };
