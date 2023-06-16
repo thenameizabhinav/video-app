@@ -162,6 +162,7 @@ const showLocalVideoPreview = (stream) => {
   labelElement.classList.add("title_label");
   labelElement.innerText = "You";
   const videoElement = document.createElement("video");
+  videoElement.classList.add("video_element");
   videoElement.autoplay = true;
   videoElement.muted = true;
   videoElement.srcObject = stream;
@@ -200,13 +201,13 @@ const addStream = (stream, connUserSocketId) => {
     videoElement.play();
   };
 
-  videoElement.addEventListener("click", () => {
-    if (videoElement.classList.contains("full_screen")) {
-      videoElement.classList.remove("full_screen");
-    } else {
-      videoElement.classList.add("full_screen");
-    }
-  });
+  // videoElement.addEventListener("click", () => {
+  //   if (videoElement.classList.contains("full_screen")) {
+  //     videoElement.classList.remove("full_screen");
+  //   } else {
+  //     videoElement.classList.add("full_screen");
+  //   }
+  // });
 
   videoContainer.appendChild(labelElement);
   videoContainer.appendChild(videoElement);
