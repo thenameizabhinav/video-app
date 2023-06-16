@@ -54,6 +54,11 @@ export const connectWithSocketIOServer = () => {
     // Click on Mute button.
     document.getElementById('mute-button')?.click();
   });
+
+  socket.on("max-audio-level", (data) => {
+    const { socketId, audioLevel } = data;
+    console.log("Max audio level: " + socketId + " " + audioLevel); 
+  });
 };
 
 export const createNewRoom = (identity, audioEnabled, videoEnabled) => {
@@ -97,4 +102,15 @@ export const muteUser = (sessionId, disableAudio) => {
     disableAudio
   };
   socket.emit("mute-user", data);
+};
+
+export const setAudioLevel = (audioLevel) => {
+  const data = {
+    audioLevel
+  };
+  socket.emit("set-audio-level", data);
+};
+
+export const getMaxAudioLevel = () => {
+  socket.emit("get-max-audio-level");
 };
