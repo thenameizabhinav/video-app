@@ -171,10 +171,12 @@ export const removePeerConnection = (data) => {
 
 const showLocalVideoPreview = (stream) => {
   //UI
+  const mySocketId = store.getState().localSocketId;
   const videosContainer = document.getElementById("videos_portal");
   videosContainer.classList.add("videos_portal_styles");
   const videoContainer = document.createElement("div");
   videoContainer.classList.add("video_track_container");
+  videoContainer.id = mySocketId;
   const labelElement = document.createElement("label");
   labelElement.classList.add("title_label");
   labelElement.innerText = "You";

@@ -1,6 +1,6 @@
 import io from "socket.io-client";
 import store from "../store/store";
-import { setRoomId, setParticipants } from "../store/action";
+import { setRoomId, setParticipants, setLocalSocketId } from "../store/action";
 import * as webRTCHandler from "./webRTCHandler";
 
 const IP = window.location.hostname;
@@ -13,6 +13,7 @@ export const connectWithSocketIOServer = () => {
 
   socket.on("connect", () => {
     console.log("successfully connected with socket io server");
+    store.dispatch(setLocalSocketId(socket.id));
     console.log(socket.id);
   });
 
@@ -57,7 +58,17 @@ export const connectWithSocketIOServer = () => {
 
   socket.on("max-audio-level", (data) => {
     const { socketId, audioLevel } = data;
-    console.log("Max audio level: " + socketId + " " + audioLevel); 
+    // Get element with class highlight.. check if element id == socketId then don't remove
+    let highlightedContainer = document.getElementsByClassName('video_track_container')[0];
+    let videoContainer = document.getElementById(socketId);
+    if (highlightedContainer && audioLevel && audioLevel <= -50) {
+      highlightedContainer.className = 'video_track_container';
+    } else {
+      console.log("Max audio level: " + socketId + " " + audioLevel);
+      if (videoContainer) {
+        videoContainer.className = 'video_track_container highlight';
+      }
+    }
   });
 };
 

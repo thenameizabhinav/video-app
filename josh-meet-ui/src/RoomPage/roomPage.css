@@ -672,3 +672,7 @@ video {
     color: white;
     z-index: 9999;
 }
+
+.highlight {
+    box-shadow: 0px 0px 15px grey;
+}
