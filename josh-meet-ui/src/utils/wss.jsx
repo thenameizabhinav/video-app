@@ -58,11 +58,13 @@ export const connectWithSocketIOServer = () => {
 
   socket.on("max-audio-level", (data) => {
     const { socketId, audioLevel } = data;
-    // Get element with class highlight.. check if element id == socketId then don't remove
-    let highlightedContainer = document.getElementsByClassName('video_track_container')[0];
+    let highlightedContainers = document.getElementsByClassName('video_track_container');
     let videoContainer = document.getElementById(socketId);
-    if (highlightedContainer && audioLevel && audioLevel <= -50) {
-      highlightedContainer.className = 'video_track_container';
+    if (highlightedContainers && audioLevel && audioLevel <= -50) {
+      // Remove the highlight.
+      for (let i = 0; i < highlightedContainers.length; i++) {
+        highlightedContainers.item(i).className = 'video_track_container';
+      }
     } else {
       console.log("Max audio level: " + socketId + " " + audioLevel);
       if (videoContainer) {
