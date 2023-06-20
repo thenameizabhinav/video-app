@@ -475,7 +475,7 @@ video {
 .video_track_container:first-child:nth-last-child(2),
 .video_track_container:first-child:nth-last-child(2)~.video_track_container {
     /* width: 50%; */
-    height: 50%; 
+    height: 60%; 
     position: relative;
 }
 
@@ -638,7 +638,6 @@ video {
 .participant-options .button-without-style {
     display: flex;
     align-items: center;
-
 }
 
 .participant-avatar {
@@ -661,7 +660,6 @@ video {
 .participant-options {
     display: flex;
 }
-
 
 .timestamp-meeting-id-container {
     display: flex;
