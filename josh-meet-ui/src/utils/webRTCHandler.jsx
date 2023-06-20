@@ -52,12 +52,12 @@ const getConfiguration = () => {
   return {
     iceServers: [
       {
-        urls: ["turn:3.108.41.47:3478?transport=udp"],
+        urls: ["turn:43.204.75.41:3478?transport=udp"],
         username: "josh",
         credential: "password",
       },
       {
-        urls: ["turn:3.108.41.47:3478?transport=tcp"],
+        urls: ["turn:43.204.75.41:3478?transport=tcp"],
         username: "josh",
         credential: "password",
       },
