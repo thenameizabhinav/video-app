@@ -58,15 +58,20 @@ export const connectWithSocketIOServer = () => {
 
   socket.on("max-audio-level", (data) => {
     const { socketId, audioLevel } = data;
-    let highlightedContainers = document.getElementsByClassName('video_track_container');
+    let highlightedContainers = document.getElementsByClassName('video_track_container highlight');
     let videoContainer = document.getElementById(socketId);
-    if (highlightedContainers && audioLevel && audioLevel <= -50) {
-      // Remove the highlight.
-      for (let i = 0; i < highlightedContainers.length; i++) {
-        highlightedContainers.item(i).className = 'video_track_container';
+    if (audioLevel && audioLevel <= -50) {
+      if (highlightedContainers) {
+        // Remove the highlight.
+        for (let i = 0; i < highlightedContainers.length; i++) {
+          highlightedContainers.item(i).className = 'video_track_container';
+        }
       }
     } else {
-      console.log("Max audio level: " + socketId + " " + audioLevel);
+      highlightedContainers = document.getElementsByClassName('video_track_container highlight');
+      if (highlightedContainers && highlightedContainers.length) {
+        return;
+      }
       if (videoContainer) {
         videoContainer.className = 'video_track_container highlight';
       }
