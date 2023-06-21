@@ -1,6 +1,7 @@
 import { setShowOverlay, setMessages } from "../store/action";
 import store from "../store/store";
 import * as wss from "./wss";
+import hark from './hark';
 
 const SimplePeer = window.SimplePeer;
 const defaultConstraints = {
@@ -9,11 +10,27 @@ const defaultConstraints = {
 };
 
 let localStream = null;
+let max_audio_interval = null;
+
+function check_volume_change(localStream) {
+  let hark_options = {'interval': 250};
+  let audioMonitor = new hark(localStream, hark_options);
+  audioMonitor.on('volume_change', function(volume) { 
+    if (volume == Infinity) {
+      return;
+    }
+    wss.setAudioLevel(volume)
+  });
+  max_audio_interval = setInterval(()=> {
+    wss.getMaxAudioLevel()
+  }, 250);
+}
 
 async function getMedia(isRoomHost, identity, roomId) {
   try {
     localStream = await navigator.mediaDevices.getUserMedia(defaultConstraints);
     console.log("successfully got the local stream");
+    check_volume_change(localStream);
     showLocalVideoPreview(localStream);
     store.dispatch(setShowOverlay(false));
     let audioEnabled, videoEnabled;
@@ -154,10 +171,12 @@ export const removePeerConnection = (data) => {
 
 const showLocalVideoPreview = (stream) => {
   //UI
+  const mySocketId = store.getState().localSocketId;
   const videosContainer = document.getElementById("videos_portal");
   videosContainer.classList.add("videos_portal_styles");
   const videoContainer = document.createElement("div");
   videoContainer.classList.add("video_track_container");
+  videoContainer.id = mySocketId;
   const labelElement = document.createElement("label");
   labelElement.classList.add("title_label");
   labelElement.innerText = "You";
@@ -293,4 +312,10 @@ const formatAMPM = (date) => {
   minutes = minutes < 10 ? "0" + minutes : minutes;
   var strTime = hours + ":" + minutes + " " + ampm;
   return strTime;
+};
+
+export const stop_max_audio = () => {
+  if (max_audio_interval) {
+    clearInterval(max_audio_interval);
+  }
 };

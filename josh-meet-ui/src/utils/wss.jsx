@@ -1,6 +1,6 @@
 import io from "socket.io-client";
 import store from "../store/store";
-import { setRoomId, setParticipants } from "../store/action";
+import { setRoomId, setParticipants, setLocalSocketId } from "../store/action";
 import * as webRTCHandler from "./webRTCHandler";
 
 const IP = window.location.hostname;
@@ -13,6 +13,7 @@ export const connectWithSocketIOServer = () => {
 
   socket.on("connect", () => {
     console.log("successfully connected with socket io server");
+    store.dispatch(setLocalSocketId(socket.id));
     console.log(socket.id);
   });
 
@@ -53,6 +54,28 @@ export const connectWithSocketIOServer = () => {
     console.log("You have been muted by:" + mutedBy);
     // Click on Mute button.
     document.getElementById('mute-button')?.click();
+  });
+
+  socket.on("max-audio-level", (data) => {
+    const { socketId, audioLevel } = data;
+    let highlightedContainers = document.getElementsByClassName('video_track_container highlight');
+    let videoContainer = document.getElementById(socketId);
+    if (audioLevel && audioLevel <= -50) {
+      if (highlightedContainers) {
+        // Remove the highlight.
+        for (let i = 0; i < highlightedContainers.length; i++) {
+          highlightedContainers.item(i).className = 'video_track_container';
+        }
+      }
+    } else {
+      highlightedContainers = document.getElementsByClassName('video_track_container highlight');
+      if (highlightedContainers && highlightedContainers.length) {
+        return;
+      }
+      if (videoContainer) {
+        videoContainer.className = 'video_track_container highlight';
+      }
+    }
   });
 };
 
@@ -97,4 +120,15 @@ export const muteUser = (sessionId, disableAudio) => {
     disableAudio
   };
   socket.emit("mute-user", data);
+};
+
+export const setAudioLevel = (audioLevel) => {
+  const data = {
+    audioLevel
+  };
+  socket.emit("set-audio-level", data);
+};
+
+export const getMaxAudioLevel = () => {
+  socket.emit("get-max-audio-level");
 };

@@ -8,6 +8,7 @@ const Actions = {
   SET_MESSAGES: "SET_MESSAGES",
   SET_CHAT_SECTION: "SET_CHAT_SECTION",
   SET_PARTICIPANT_SECTION: "SET_PARTICIPIANT_SECTION",
+  SET_LOCAL_SOCKET_ID: "SET_LOCAL_SOCKET_ID",
 };
 
 export const setIsRoomHost = (isRoomHost) => {
@@ -72,5 +73,12 @@ export const setParticipantSection = (participantSection) => {
     participantSection,
   };
 };
+
+export const setLocalSocketId = (localSocketId) => {
+  return {
+    type: Actions.SET_LOCAL_SOCKET_ID,
+    localSocketId,
+  }
+}
 
 export default Actions;

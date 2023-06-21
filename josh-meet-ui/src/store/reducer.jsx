@@ -10,6 +10,7 @@ const initState = {
   messages: [],
   chatSection: false,
   participantSection: false,
+  localSocketId: "",
 };
 
 const reducer = (state = initState, action) => {
@@ -59,6 +60,11 @@ const reducer = (state = initState, action) => {
         ...state,
         participantSection: action.participantSection,
       };
+    case Actions.SET_LOCAL_SOCKET_ID:
+      return {
+        ...state,
+        localSocketId: action.localSocketId
+      }
     default:
       return state;
   }

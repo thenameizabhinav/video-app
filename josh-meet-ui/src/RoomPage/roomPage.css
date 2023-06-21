@@ -670,3 +670,8 @@ video {
     color: white;
     z-index: 9999;
 }
+
+.highlight {
+    border-radius: 8px;
+    border: 4px solid rgb(102,157,246)
+}
