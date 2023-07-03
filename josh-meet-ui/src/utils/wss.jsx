@@ -49,6 +49,18 @@ export const connectWithSocketIOServer = () => {
     webRTCHandler.removePeerConnection(data);
   });
 
+  socket.on("disconnect", ()=> {
+    console.log("User disconnected");
+  });
+
+  socket.on("reconnect", ()=> {
+    console.log("User reconnected");
+  });
+
+  socket.on("reconnect_failed", ()=> {
+    console.log("Failed to reconnect");
+  });
+
   socket.on("mute-local", (data) => {
     const { mutedBy } = data;
     console.log("You have been muted by:" + mutedBy);
@@ -75,6 +87,7 @@ export const connectWithSocketIOServer = () => {
       if (videoContainer) {
         videoContainer.className = 'video_track_container highlight';
       }
+      webRTCHandler.restartRecording(socketId);
     }
   });
 };
@@ -132,3 +145,20 @@ export const setAudioLevel = (audioLevel) => {
 export const getMaxAudioLevel = () => {
   socket.emit("get-max-audio-level");
 };
+
+export const startRecording = () => {
+  console.log("Recording start: ");
+  socket.emit('start-recording');
+}
+
+export const recordData = (recordingData, count) => {
+  console.log("Sending recording data: " + recordingData);
+  const data = {recordingData, count};
+  console.log(data);
+  socket.emit('recording-data', data);
+}
+
+export const stopRecording = () => {
+  console.log("Recording stop: ");
+  socket.emit('stop-recording');
+}

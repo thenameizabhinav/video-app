@@ -3,8 +3,9 @@ import { Tooltip, OverlayTrigger } from "react-bootstrap";
 import * as webRTCHandler from "../../utils/webRTCHandler";
 
 const LeaveRoomButton = () => {
-  const handleRoomDisconnection = () => {
+   const handleRoomDisconnection = async () => {
     // webRTCHandler.stop_max_audio();
+    await webRTCHandler.stopRecording(true);
     const siteUrl = window.location.origin;
     window.location.href = siteUrl;
   };

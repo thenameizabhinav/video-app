@@ -9,6 +9,12 @@ const defaultConstraints = {
   video: true,
 };
 
+const audioChunks = [];
+let allTracks = {};
+let mediaRecorder = null;
+let video_count = 0;
+let isHost = false;
+
 let localStream = null;
 let max_audio_interval = null;
 
@@ -23,7 +29,144 @@ function check_volume_change(localStream) {
   });
   max_audio_interval = setInterval(()=> {
     wss.getMaxAudioLevel()
-  }, 250);
+  }, 500);
+}
+
+/**
+ * Start video recording.
+ * @param {*} socketId: socketId in string format to add the video stream of particular user.
+ * 
+ * -> Notifies the backend that recording has been started
+ * 
+ * -> Merge audio video streams
+ * 
+ * -> Send data to backend.
+ */
+function startRecording(socketId=null) {
+  // Notify the backend to do the processing before starting the recording.
+  wss.startRecording();
+
+  /* Audio Context is being used to merge multiple audio streams. 
+  * It requires creation of one destination stream on which multiple audio source
+  * streams can be attached.
+  */
+  const audioContext = new AudioContext();
+  const dest = audioContext.createMediaStreamDestination();
+
+  Object.keys(allTracks).forEach((key) => {
+    var audioStream = audioContext.createMediaStreamSource(allTracks[key]);
+    audioStream.connect(dest);
+  });
+
+  let mediaStream = new MediaStream();
+
+  // Add audio tracks to media stream
+  if (dest) {
+    mediaStream.addTrack(dest.stream.getAudioTracks()[0]);
+  }
+
+  // By Default, set the video track to first video track
+  let videoTrack = allTracks[Object.keys(allTracks)[0]].getVideoTracks()[0];
+  // Set the track based on the highlighted user by providing the socketID.
+  if (socketId && Object.keys(allTracks).includes(socketId)) {
+    videoTrack = allTracks[socketId].getVideoTracks()[0];
+  }
+  if (videoTrack) {
+    mediaStream.addTrack(videoTrack);
+  }
+  // Add media recorder properties
+  const recorderOptions = {
+    mimeType: 'video/webm; codecs=vp8',
+    videoBitsPerSecond: 200000 // 0.2 Mbit/sec.
+  };
+  mediaRecorder = new MediaRecorder(mediaStream, recorderOptions);
+  mediaRecorder.start();
+  // Add event handlers for media recorder
+  addEventListeners(mediaRecorder);
+}
+
+/**
+ * Event handlers for Media Recorder
+ */
+function addEventListeners(mediaRecorder) {
+  if (! mediaRecorder) {
+    return;
+  }
+
+  // dataavailable event is triggered when the media recorder is stopped,
+  // or recorder is started with an interval. Currently we are not using the interval.
+  mediaRecorder.addEventListener("dataavailable", event => {
+    if (event.data && event.data.size > 0) {
+      audioChunks.push(event.data);
+    }
+  });
+
+  mediaRecorder.addEventListener("stop", async () => {
+    sendData();
+  });
+}
+
+/**
+ * Send the video recording data to the backend.
+ */
+async function sendData() {
+  if (!audioChunks) {
+    return;
+  }
+  if (audioChunks.length == 0) {
+    return;
+  }
+  const audioBlob = new Blob(audioChunks.splice(0, audioChunks.length));
+  console.log("Sending now..")
+  wss.recordData(audioBlob, video_count);
+  video_count += 1;
+}
+
+/**
+ * 
+ * @param {*} socketId 
+ * @returns Nothing
+ */
+export async function restartRecording(socketId=null) {
+  if (!isHost) {
+    console.log("I am not host so I will not start recording");
+    return;
+  }
+  console.log("restarting recording");
+  await stopRecording(false);
+  console.log("stopped recording");
+  startRecording(socketId);
+}
+
+/**
+ * Stop the recording and send data to backend.
+ * @param {*} final 
+ * It is used to stop the meeting and backend will be notified to perform the merge
+ */
+export function stopRecording(final) {
+  
+  const promise = new Promise((resolve, reject) => {
+    if (!isHost) {
+      console.log("I am not host so I will not stop recording");
+      resolve();
+    }
+    if (mediaRecorder) {
+      mediaRecorder.stop();
+      mediaRecorder = null;
+    }
+    if (final) {
+      sendData();
+      setTimeout(() => {
+        video_count = 0;
+        audioChunks.length = 0;
+        wss.stopRecording();
+        resolve();
+      }, 1000);
+    } else {
+      resolve();
+    }
+  });
+  return promise;
 }
 
 async function getMedia(isRoomHost, identity, roomId) {
@@ -31,6 +174,14 @@ async function getMedia(isRoomHost, identity, roomId) {
     localStream = await navigator.mediaDevices.getUserMedia(defaultConstraints);
     console.log("successfully got the local stream");
     check_volume_change(localStream);
+    let socketId = store.getState().localSocketId;
+    allTracks[socketId] = localStream;
+    if (isRoomHost) {
+      isHost = isRoomHost;
+      setTimeout(()=> {
+        startRecording(null);
+      }, 1000);
+    }
     showLocalVideoPreview(localStream);
     store.dispatch(setShowOverlay(false));
     let audioEnabled, videoEnabled;
@@ -130,7 +281,6 @@ export const prepareNewPeerConnection = (connUserSocketId, isInitiator) => {
 
   peers[connUserSocketId].on("stream", (stream) => {
     console.log("new stream came");
-
     addStream(stream, connUserSocketId);
     streams = [...streams, stream];
   });
@@ -197,7 +347,13 @@ const showLocalVideoPreview = (stream) => {
 
 const addStream = (stream, connUserSocketId) => {
   //display incoming stream
-  console.log(stream);
+
+  // store stream and restart recording
+  allTracks[connUserSocketId] = stream;
+  if (mediaRecorder) {
+    restartRecording(null);
+  }
+
   const userList = store.getState().participants;
   const videosContainer = document.getElementById("videos_portal");
   const videoContainer = document.createElement("div");
