@@ -197,7 +197,6 @@ const showLocalVideoPreview = (stream) => {
 
 const addStream = (stream, connUserSocketId) => {
   //display incoming stream
-  console.log(stream);
   const userList = store.getState().participants;
   const videosContainer = document.getElementById("videos_portal");
   const videoContainer = document.createElement("div");
@@ -220,13 +219,13 @@ const addStream = (stream, connUserSocketId) => {
     videoElement.play();
   };
 
-  // videoElement.addEventListener("click", () => {
-  //   if (videoElement.classList.contains("full_screen")) {
-  //     videoElement.classList.remove("full_screen");
-  //   } else {
-  //     videoElement.classList.add("full_screen");
-  //   }
-  // });
+  videoElement.addEventListener("click", () => {
+    if (videoElement.classList.contains("full_screen")) {
+      videoElement.classList.remove("full_screen");
+    } else {
+      videoElement.classList.add("full_screen");
+    }
+  });
 
   videoContainer.appendChild(labelElement);
   videoContainer.appendChild(videoElement);

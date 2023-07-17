@@ -60,7 +60,7 @@ const SwitchToScreenSharingButton = () => {
           </button>
         </OverlayTrigger>
       </div>
-      {/* disabled temp */}
+
       {/* {isScreenSharingActive && (
         <LocalScreenSharingPreview stream={screenSharingStream} />
       )} */}
