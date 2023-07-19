@@ -10,7 +10,6 @@ import JoinRoomPage from "./JoinRoomPage";
 import RoomPage from "./RoomPage";
 import IntroductionPage from "./Dashboard";
 import { connectWithSocketIOServer } from "./utils/wss";
-import "bootstrap/dist/css/bootstrap.min.css";
 
 export const history = createBrowserHistory();
 

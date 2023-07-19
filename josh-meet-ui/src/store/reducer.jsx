@@ -11,6 +11,7 @@ const initState = {
   chatSection: false,
   participantSection: false,
   localSocketId: "",
+  recording: false,
 };
 
 const reducer = (state = initState, action) => {
@@ -63,8 +64,13 @@ const reducer = (state = initState, action) => {
     case Actions.SET_LOCAL_SOCKET_ID:
       return {
         ...state,
-        localSocketId: action.localSocketId
-      }
+        localSocketId: action.localSocketId,
+      };
+    case Actions.SET_RECORDING:
+      return {
+        ...state,
+        recording: action.recording,
+      };
     default:
       return state;
   }

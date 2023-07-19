@@ -1,7 +1,7 @@
 import { setShowOverlay, setMessages } from "../store/action";
 import store from "../store/store";
 import * as wss from "./wss";
-import hark from './hark';
+import hark from "./hark";
 
 const SimplePeer = window.SimplePeer;
 const defaultConstraints = {
@@ -19,37 +19,37 @@ let localStream = null;
 let max_audio_interval = null;
 
 function check_volume_change(localStream) {
-  let hark_options = {'interval': 250};
+  let hark_options = { interval: 250 };
   let audioMonitor = new hark(localStream, hark_options);
-  audioMonitor.on('volume_change', function(volume) { 
+  audioMonitor.on("volume_change", function (volume) {
     if (volume == Infinity) {
       return;
     }
-    wss.setAudioLevel(volume)
+    wss.setAudioLevel(volume);
   });
-  max_audio_interval = setInterval(()=> {
-    wss.getMaxAudioLevel()
+  max_audio_interval = setInterval(() => {
+    wss.getMaxAudioLevel();
   }, 500);
 }
 
 /**
  * Start video recording.
  * @param {*} socketId: socketId in string format to add the video stream of particular user.
- * 
+ *
  * -> Notifies the backend that recording has been started
- * 
+ *
  * -> Merge audio video streams
- * 
+ *
  * -> Send data to backend.
  */
-function startRecording(socketId=null) {
+export function startRecording(socketId = null) {
   // Notify the backend to do the processing before starting the recording.
   wss.startRecording();
 
-  /* Audio Context is being used to merge multiple audio streams. 
-  * It requires creation of one destination stream on which multiple audio source
-  * streams can be attached.
-  */
+  /* Audio Context is being used to merge multiple audio streams.
+   * It requires creation of one destination stream on which multiple audio source
+   * streams can be attached.
+   */
   const audioContext = new AudioContext();
   const dest = audioContext.createMediaStreamDestination();
 
@@ -76,8 +76,8 @@ function startRecording(socketId=null) {
   }
   // Add media recorder properties
   const recorderOptions = {
-    mimeType: 'video/webm; codecs=vp8',
-    videoBitsPerSecond: 200000 // 0.2 Mbit/sec.
+    mimeType: "video/webm; codecs=vp8",
+    videoBitsPerSecond: 200000, // 0.2 Mbit/sec.
   };
   mediaRecorder = new MediaRecorder(mediaStream, recorderOptions);
   mediaRecorder.start();
@@ -89,13 +89,13 @@ function startRecording(socketId=null) {
  * Event handlers for Media Recorder
  */
 function addEventListeners(mediaRecorder) {
-  if (! mediaRecorder) {
+  if (!mediaRecorder) {
     return;
   }
 
   // dataavailable event is triggered when the media recorder is stopped,
   // or recorder is started with an interval. Currently we are not using the interval.
-  mediaRecorder.addEventListener("dataavailable", event => {
+  mediaRecorder.addEventListener("dataavailable", (event) => {
     if (event.data && event.data.size > 0) {
       audioChunks.push(event.data);
     }
@@ -117,19 +117,25 @@ async function sendData() {
     return;
   }
   const audioBlob = new Blob(audioChunks.splice(0, audioChunks.length));
-  console.log("Sending now..")
+  console.log("Sending now..");
   wss.recordData(audioBlob, video_count);
   video_count += 1;
 }
 
 /**
- * 
- * @param {*} socketId 
+ *
+ * @param {*} socketId
  * @returns Nothing
  */
-export async function restartRecording(socketId=null) {
+export async function restartRecording(socketId = null) {
   if (!isHost) {
     console.log("I am not host so I will not start recording");
+    return;
+  }
+
+  const rec = store.getState().recording;
+  console.log("Value of recording in restart Recording:", rec);
+  if (!rec) {
     return;
   }
   console.log("restarting recording");
@@ -140,11 +146,10 @@ export async function restartRecording(socketId=null) {
 
 /**
  * Stop the recording and send data to backend.
- * @param {*} final 
+ * @param {*} final
  * It is used to stop the meeting and backend will be notified to perform the merge
  */
 export function stopRecording(final) {
-  
   const promise = new Promise((resolve, reject) => {
     if (!isHost) {
       console.log("I am not host so I will not stop recording");
@@ -178,9 +183,9 @@ async function getMedia(isRoomHost, identity, roomId) {
     allTracks[socketId] = localStream;
     if (isRoomHost) {
       isHost = isRoomHost;
-      setTimeout(()=> {
-        startRecording(null);
-      }, 1000);
+      // setTimeout(() => {
+      //   startRecording(null);
+      // }, 1000);
     }
     showLocalVideoPreview(localStream);
     store.dispatch(setShowOverlay(false));

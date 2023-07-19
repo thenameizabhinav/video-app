@@ -4,7 +4,7 @@ import { setRoomId, setParticipants, setLocalSocketId } from "../store/action";
 import * as webRTCHandler from "./webRTCHandler";
 
 const IP = window.location.hostname;
-// const SERVER = `http://${IP}:5002`;
+// const SERVER = `http://43.204.75.41:5002`;
 const SERVER = `https://${IP}`;
 let socket = null;
 
@@ -49,15 +49,15 @@ export const connectWithSocketIOServer = () => {
     webRTCHandler.removePeerConnection(data);
   });
 
-  socket.on("disconnect", ()=> {
+  socket.on("disconnect", () => {
     console.log("User disconnected");
   });
 
-  socket.on("reconnect", ()=> {
+  socket.on("reconnect", () => {
     console.log("User reconnected");
   });
 
-  socket.on("reconnect_failed", ()=> {
+  socket.on("reconnect_failed", () => {
     console.log("Failed to reconnect");
   });
 
@@ -65,27 +65,31 @@ export const connectWithSocketIOServer = () => {
     const { mutedBy } = data;
     console.log("You have been muted by:" + mutedBy);
     // Click on Mute button.
-    document.getElementById('mute-button')?.click();
+    document.getElementById("mute-button")?.click();
   });
 
   socket.on("max-audio-level", (data) => {
     const { socketId, audioLevel } = data;
-    let highlightedContainers = document.getElementsByClassName('video_track_container highlight');
+    let highlightedContainers = document.getElementsByClassName(
+      "video_track_container highlight"
+    );
     let videoContainer = document.getElementById(socketId);
     if (audioLevel && audioLevel <= -50) {
       if (highlightedContainers) {
         // Remove the highlight.
         for (let i = 0; i < highlightedContainers.length; i++) {
-          highlightedContainers.item(i).className = 'video_track_container';
+          highlightedContainers.item(i).className = "video_track_container";
         }
       }
     } else {
-      highlightedContainers = document.getElementsByClassName('video_track_container highlight');
+      highlightedContainers = document.getElementsByClassName(
+        "video_track_container highlight"
+      );
       if (highlightedContainers && highlightedContainers.length) {
         return;
       }
       if (videoContainer) {
-        videoContainer.className = 'video_track_container highlight';
+        videoContainer.className = "video_track_container highlight";
       }
       webRTCHandler.restartRecording(socketId);
     }
@@ -122,7 +126,7 @@ export const signalPeerData = (data) => {
 export const userMediaUpdate = (audioEnabled, videoEnabled) => {
   let data = {
     audioEnabled,
-    videoEnabled
+    videoEnabled,
   };
   socket.emit("user-media-update", data);
 };
@@ -130,14 +134,14 @@ export const userMediaUpdate = (audioEnabled, videoEnabled) => {
 export const muteUser = (sessionId, disableAudio) => {
   const data = {
     sessionId,
-    disableAudio
+    disableAudio,
   };
   socket.emit("mute-user", data);
 };
 
 export const setAudioLevel = (audioLevel) => {
   const data = {
-    audioLevel
+    audioLevel,
   };
   socket.emit("set-audio-level", data);
 };
@@ -148,17 +152,17 @@ export const getMaxAudioLevel = () => {
 
 export const startRecording = () => {
   console.log("Recording start: ");
-  socket.emit('start-recording');
-}
+  socket.emit("start-recording");
+};
 
 export const recordData = (recordingData, count) => {
   console.log("Sending recording data: " + recordingData);
-  const data = {recordingData, count};
+  const data = { recordingData, count };
   console.log(data);
-  socket.emit('recording-data', data);
-}
+  socket.emit("recording-data", data);
+};
 
 export const stopRecording = () => {
   console.log("Recording stop: ");
-  socket.emit('stop-recording');
-}
+  socket.emit("stop-recording");
+};

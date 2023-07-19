@@ -9,6 +9,7 @@ const Actions = {
   SET_CHAT_SECTION: "SET_CHAT_SECTION",
   SET_PARTICIPANT_SECTION: "SET_PARTICIPIANT_SECTION",
   SET_LOCAL_SOCKET_ID: "SET_LOCAL_SOCKET_ID",
+  SET_RECORDING: "SET_RECORDING",
 };
 
 export const setIsRoomHost = (isRoomHost) => {
@@ -78,7 +79,14 @@ export const setLocalSocketId = (localSocketId) => {
   return {
     type: Actions.SET_LOCAL_SOCKET_ID,
     localSocketId,
-  }
-}
+  };
+};
+
+export const setRecording = (recording) => {
+  return {
+    type: Actions.SET_RECORDING,
+    recording,
+  };
+};
 
 export default Actions;
