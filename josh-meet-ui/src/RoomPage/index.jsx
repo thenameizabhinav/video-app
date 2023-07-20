@@ -43,10 +43,6 @@ const RoomPage = ({
 
   return (
     <div className="room_container">
-      {/* <div className="timestamp-meeting-id-container">
-        <span>timestamp</span>
-        <span>meeting id</span>
-      </div> */}
       <VideoButtons />
       {participantSection && <ParticipantsSection />}
       {chatSection && <ChatSection />}

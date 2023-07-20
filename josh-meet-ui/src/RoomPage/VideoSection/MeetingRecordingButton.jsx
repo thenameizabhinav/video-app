@@ -18,7 +18,7 @@ const MeetingRecordingButton = (props) => {
   }`;
 
   const handleMeetingButtonPressed = () => {
-    if (isRecording === "empty") {
+    if (isRecording === "empty" || isRecording === "stop") {
       setRecordingAction(true);
       console.log("Meeting button pressed: true");
       setIsRecording("start");
@@ -49,7 +49,7 @@ const MeetingRecordingButton = (props) => {
 
   return (
     <>
-      {/* {isRecording === "start" && (
+      {isRecording === "start" && (
         <ToastContainer className="p-3" position="top-center">
           <Toast
             show={showToast}
@@ -80,7 +80,7 @@ const MeetingRecordingButton = (props) => {
             <Toast.Body className="text-white"></Toast.Body>
           </Toast>
         </ToastContainer>
-      )} */}
+      )}
       <div className="video_button_container">
         <OverlayTrigger placement="top" overlay={tooltip}>
           <button
