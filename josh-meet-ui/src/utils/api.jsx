@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const IP = window.location.hostname;
-//const serverApi = `http://${IP}:5002/api/v1`;
+const serverApi = `http://${IP}:5002/api/v1`;
 //const serverApi = `https://${IP}/api/v1`;
 // const serverApi = `https://43.204.75.41/api/v1`;
 

@@ -98,18 +98,11 @@ export const connectWithSocketIOServer = () => {
     }
   });
 
-  const isRecordingStatus = store.getState().recording;
-  if (isRecordingStatus) {
-    socket.emit("meeting-recording-toast", (data) => {
-      recordingStatus = true;
-      console.log("meeting-recording-toast", recordingStatus);
-    });
-  } else if (!isRecordingStatus && recordingCounter !== 0) {
-    recordingStatus = false;
-    socket.emit("meeting-recording-toast", (data) => {
-      console.log("meeting-recording-toast", recordingStatus);
-    });
-  }
+  socket.on("meeting-recording-toast", (data) => {
+    console.log("Got meeting-recording toast: ", data)
+  });
+
+  
 };
 
 export const createNewRoom = (identity, audioEnabled, videoEnabled) => {
@@ -168,7 +161,10 @@ export const getMaxAudioLevel = () => {
 
 export const startRecording = (restart) => {
   console.log("Recording start: ");
-  if (!restart) ++recordingCounter;
+  if (!restart) {
+    ++recordingCounter;
+    sendRecordingStatus();
+  };
   socket.emit("start-recording", recordingCounter);
 };
 
@@ -190,4 +186,14 @@ export const stopRecording = (data) => {
   };
   console.log("Recording stop: ");
   socket.emit("stop-recording", newData);
+  sendRecordingStatus();
 };
+
+export const sendRecordingStatus = () => {
+  const isRecordingStatus = store.getState().recording;
+  if (isRecordingStatus) {
+    socket.emit("meeting-recording-toast", {recordingStatus: true});
+  } else if (!isRecordingStatus && recordingCounter !== 0) {
+    socket.emit("meeting-recording-toast", {recordingStatus: false});
+  }
+}
