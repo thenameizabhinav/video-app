@@ -593,6 +593,11 @@ video {
     background-color: red;
 }
 
+.meeting-recording-button-disabled {
+    opacity: 0.25;
+    cursor: none;
+}
+
 .participant_button_clicked {
     background-color: #0a91db;
 }

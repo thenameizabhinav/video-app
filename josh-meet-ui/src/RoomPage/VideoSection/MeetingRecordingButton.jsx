@@ -9,18 +9,20 @@ const MeetingRecordingButton = (props) => {
   const [isRecording, setIsRecording] = useState("empty");
 
   const buttonClassName = `video_button ${
-    isRecording === "start" ? "video_button_disabled" : ""
+    !isHost
+      ? "meeting-recording-button-disabled"
+      : isRecording === "start"
+      ? "video_button_disabled"
+      : ""
   }`;
 
   const handleMeetingButtonPressed = () => {
     if (isRecording === "empty" || isRecording === "stop") {
       setRecordingAction(true);
-      console.log("Meeting button pressed: true");
       setIsRecording("start");
       setIsRecordingToast("start");
     } else if (isRecording === "start") {
       setRecordingAction(false);
-      console.log("Meeting button pressed: false");
       setIsRecording("stop");
       setIsRecordingToast("stop");
     }
@@ -29,7 +31,9 @@ const MeetingRecordingButton = (props) => {
   const tooltip = (
     <Tooltip id="tooltip" style={{ position: "fixed" }}>
       <strong>
-        {isRecording === "empty" || isRecording === "stop"
+        {!isHost
+          ? "Only host can record meeting"
+          : isRecording === "empty" || isRecording === "stop"
           ? "Start Recording"
           : "Stop Recording"}
       </strong>
@@ -49,9 +53,8 @@ const MeetingRecordingButton = (props) => {
       <div className="video_button_container">
         <OverlayTrigger placement="top" overlay={tooltip}>
           <button
-            onClick={handleMeetingButtonPressed}
+            onClick={isHost ? handleMeetingButtonPressed : () => {}}
             className={buttonClassName}
-            disabled={!isHost}
           >
             {isRecording === "empty" || isRecording === "stop" ? (
               <span className="material-icons">fiber_manual_record</span>

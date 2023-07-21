@@ -166,14 +166,10 @@ export const getMaxAudioLevel = () => {
   socket.emit("get-max-audio-level");
 };
 
-export const startRecording = (data) => {
+export const startRecording = (restart) => {
   console.log("Recording start: ");
-  ++recordingCounter;
-  const newData = {
-    ...data,
-    recordingCounter,
-  };
-  socket.emit("start-recording", newData);
+  if (!restart) ++recordingCounter;
+  socket.emit("start-recording", recordingCounter);
 };
 
 export const recordData = (recordingData, videoPartCount, data) => {

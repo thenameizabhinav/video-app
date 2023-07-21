@@ -42,9 +42,9 @@ function check_volume_change(localStream) {
  *
  * -> Send data to backend.
  */
-export function startRecording(socketId = null) {
+export function startRecording(socketId = null, restart) {
   // Notify the backend to do the processing before starting the recording.
-  wss.startRecording();
+  wss.startRecording(restart);
 
   /* Audio Context is being used to merge multiple audio streams.
    * It requires creation of one destination stream on which multiple audio source
@@ -128,6 +128,7 @@ async function sendData() {
  * @returns Nothing
  */
 export async function restartRecording(socketId = null) {
+  const restart = true;
   if (!isHost) {
     console.log("I am not host so I will not start recording");
     return;
@@ -141,7 +142,7 @@ export async function restartRecording(socketId = null) {
   console.log("restarting recording");
   await stopRecording(false);
   console.log("stopped recording");
-  startRecording(socketId);
+  startRecording(socketId, restart);
 }
 
 /**
