@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { history } from "../App";
 import VideoButtons from "./VideoSection/VideoButtons";
 import ParticipantsSection from "./ParticipantsSection/ParticipantsSection";
 import ChatSection from "./ChatSection/ChatSection";
 import RoomLabel from "./roomLabel.jsx";
 import * as webRTCHandler from "../utils/webRTCHandler";
 import Overlay from "./overlay.jsx";
-import "./roomPage.css";
 import Toast from "react-bootstrap/Toast";
 import ToastContainer from "react-bootstrap/ToastContainer";
+import "./roomPage.css";
 
 const RoomPage = ({
   roomId,
@@ -22,7 +21,6 @@ const RoomPage = ({
   const [showStartToast, setShowStartToast] = useState(true);
   const [showStopToast, setShowStopToast] = useState(true);
   const [isRecordingToast, setIsRecordingToast] = useState("empty");
-  const toggleShowStartToast = () => setShowStartToast(!showStartToast);
   const toggleShowStopToast = () => setShowStopToast(!showStopToast);
 
   if (!isRoomHost && !roomId) {
@@ -51,7 +49,6 @@ const RoomPage = ({
 
   useEffect(() => {
     if (isRecordingToast === "stop") {
-      setShowStartToast(true);
       setShowStopToast(true);
     }
   }, [isRecordingToast]);
@@ -64,14 +61,8 @@ const RoomPage = ({
       <RoomLabel roomId={roomId} />
       {isRecordingToast === "start" && (
         <ToastContainer className="p-3" position="top-end">
-          <Toast
-            show={showStartToast}
-            delay={3000}
-            autohide
-            onClose={toggleShowStartToast}
-            bg="dark"
-          >
-            <Toast.Header>
+          <Toast show={showStartToast} bg="dark">
+            <Toast.Header closeButton={false}>
               <strong className="me-auto">Meeting Recording Started</strong>
             </Toast.Header>
           </Toast>
@@ -81,12 +72,12 @@ const RoomPage = ({
         <ToastContainer className="p-3" position="top-end">
           <Toast
             show={showStopToast}
-            delay={3000}
+            delay={5000}
             autohide
-            onClose={toggleShowStopToast}
             bg="dark"
+            onClose={toggleShowStopToast}
           >
-            <Toast.Header>
+            <Toast.Header closeButton={false}>
               <strong className="me-auto">Meeting Recording Stopped</strong>
             </Toast.Header>
           </Toast>

@@ -12,7 +12,7 @@ const defaultConstraints = {
 const audioChunks = [];
 let allTracks = {};
 let mediaRecorder = null;
-let video_count = 0;
+let videoPartCount = 0;
 let isHost = false;
 
 let localStream = null;
@@ -118,8 +118,8 @@ async function sendData() {
   }
   const audioBlob = new Blob(audioChunks.splice(0, audioChunks.length));
   console.log("Sending now..");
-  wss.recordData(audioBlob, video_count);
-  video_count += 1;
+  wss.recordData(audioBlob, videoPartCount);
+  videoPartCount += 1;
 }
 
 /**
@@ -162,7 +162,7 @@ export function stopRecording(final) {
     if (final) {
       sendData();
       setTimeout(() => {
-        video_count = 0;
+        videoPartCount = 0;
         audioChunks.length = 0;
         wss.stopRecording();
         resolve();

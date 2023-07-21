@@ -29,7 +29,6 @@ const TimerComponent = () => {
     let minutes = Math.floor((totalMilliseconds / (1000 * 60)) % 60);
     let hours = Math.floor((totalMilliseconds / (1000 * 60 * 60)) % 24);
 
-    // Add leading zeros if necessary
     seconds = seconds < 10 ? "0" + seconds : seconds;
     minutes = minutes < 10 ? "0" + minutes : minutes;
     hours = hours < 10 ? "0" + hours : hours;

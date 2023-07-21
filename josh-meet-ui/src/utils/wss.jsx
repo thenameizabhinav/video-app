@@ -5,8 +5,11 @@ import * as webRTCHandler from "./webRTCHandler";
 
 const IP = window.location.hostname;
 // const SERVER = `http://43.204.75.41:5002`;
-const SERVER = `https://${IP}`;
+//const SERVER = `https://${IP}`;
+// const SERVER = `https://43.204.75.41/`;
 let socket = null;
+let recordingCounter = 0;
+let recordingStatus = false;
 
 export const connectWithSocketIOServer = () => {
   socket = io(SERVER, { path: "/socketio" });
@@ -94,6 +97,19 @@ export const connectWithSocketIOServer = () => {
       webRTCHandler.restartRecording(socketId);
     }
   });
+
+  const isRecordingStatus = store.getState().recording;
+  if (isRecordingStatus) {
+    socket.emit("meeting-recording-toast", (data) => {
+      recordingStatus = true;
+      console.log("meeting-recording-toast", recordingStatus);
+    });
+  } else if (!isRecordingStatus && recordingCounter !== 0) {
+    recordingStatus = false;
+    socket.emit("meeting-recording-toast", (data) => {
+      console.log("meeting-recording-toast", recordingStatus);
+    });
+  }
 };
 
 export const createNewRoom = (identity, audioEnabled, videoEnabled) => {
@@ -150,19 +166,32 @@ export const getMaxAudioLevel = () => {
   socket.emit("get-max-audio-level");
 };
 
-export const startRecording = () => {
+export const startRecording = (data) => {
   console.log("Recording start: ");
-  socket.emit("start-recording");
+  ++recordingCounter;
+  const newData = {
+    ...data,
+    recordingCounter,
+  };
+  socket.emit("start-recording", newData);
 };
 
-export const recordData = (recordingData, count) => {
+export const recordData = (recordingData, videoPartCount, data) => {
   console.log("Sending recording data: " + recordingData);
-  const data = { recordingData, count };
-  console.log(data);
-  socket.emit("recording-data", data);
+  const newData = {
+    ...data,
+    recordingData,
+    videoPartCount,
+    recordingCounter,
+  };
+  socket.emit("recording-data", newData);
 };
 
-export const stopRecording = () => {
+export const stopRecording = (data) => {
+  const newData = {
+    ...data,
+    recordingCounter,
+  };
   console.log("Recording stop: ");
-  socket.emit("stop-recording");
+  socket.emit("stop-recording", newData);
 };
