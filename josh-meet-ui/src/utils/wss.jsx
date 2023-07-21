@@ -1,12 +1,16 @@
 import io from "socket.io-client";
 import store from "../store/store";
-import { setRoomId, setParticipants, setLocalSocketId } from "../store/action";
+import {
+  setRoomId,
+  setParticipants,
+  setLocalSocketId,
+  setRecording,
+} from "../store/action";
 import * as webRTCHandler from "./webRTCHandler";
 
 const IP = window.location.hostname;
 // const SERVER = `http://43.204.75.41:5002`;
 //const SERVER = `https://${IP}`;
-// const SERVER = `https://43.204.75.41/`;
 let socket = null;
 let recordingCounter = 0;
 let recordingStatus = false;
@@ -99,10 +103,10 @@ export const connectWithSocketIOServer = () => {
   });
 
   socket.on("meeting-recording-toast", (data) => {
-    console.log("Got meeting-recording toast: ", data)
+    console.log("Got meeting-recording toast: ", data);
+    console.log(data);
+    store.dispatch(setRecording(data.recordingStatus));
   });
-
-  
 };
 
 export const createNewRoom = (identity, audioEnabled, videoEnabled) => {
@@ -164,7 +168,7 @@ export const startRecording = (restart) => {
   if (!restart) {
     ++recordingCounter;
     sendRecordingStatus();
-  };
+  }
   socket.emit("start-recording", recordingCounter);
 };
 
@@ -192,8 +196,8 @@ export const stopRecording = (data) => {
 export const sendRecordingStatus = () => {
   const isRecordingStatus = store.getState().recording;
   if (isRecordingStatus) {
-    socket.emit("meeting-recording-toast", {recordingStatus: true});
+    socket.emit("meeting-recording-toast", { recordingStatus: true });
   } else if (!isRecordingStatus && recordingCounter !== 0) {
-    socket.emit("meeting-recording-toast", {recordingStatus: false});
+    socket.emit("meeting-recording-toast", { recordingStatus: false });
   }
-}
+};

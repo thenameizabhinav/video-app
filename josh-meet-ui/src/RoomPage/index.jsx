@@ -17,12 +17,13 @@ const RoomPage = ({
   showOverlay,
   chatSection,
   participantSection,
+  recording,
 }) => {
   const [showStartToast, setShowStartToast] = useState(true);
   const [showStopToast, setShowStopToast] = useState(true);
   const [isRecordingToast, setIsRecordingToast] = useState("empty");
   const toggleShowStopToast = () => setShowStopToast(!showStopToast);
-
+  const initialMount = 0;
   if (!isRoomHost && !roomId) {
     const siteUrl = window.location.origin;
     window.location.href = siteUrl;
@@ -59,7 +60,7 @@ const RoomPage = ({
       {participantSection && <ParticipantsSection />}
       {chatSection && <ChatSection />}
       <RoomLabel roomId={roomId} />
-      {isRecordingToast === "start" && (
+      {(isRecordingToast === "start" || recording) && (
         <ToastContainer className="p-3" position="top-end">
           <Toast show={showStartToast} bg="dark">
             <Toast.Header closeButton={false}>
@@ -68,7 +69,8 @@ const RoomPage = ({
           </Toast>
         </ToastContainer>
       )}
-      {isRecordingToast === "stop" && (
+      {(isRecordingToast === "stop" ||
+        (!recording && isRecordingToast !== "empty")) && (
         <ToastContainer className="p-3" position="top-end">
           <Toast
             show={showStopToast}
