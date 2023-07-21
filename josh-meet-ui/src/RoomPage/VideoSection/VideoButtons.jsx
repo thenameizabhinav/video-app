@@ -10,7 +10,7 @@ import MeetingRecordingButton from "./MeetingRecordingButton";
 import TimerComponent from "./TimerComponent";
 
 const VideoButtons = (props) => {
-  const { isRoomHost } = props;
+  const { isRoomHost, setIsRecordingToast } = props;
   return (
     <div className="video_buttons_container">
       <TimerComponent />
@@ -20,7 +20,10 @@ const VideoButtons = (props) => {
       <LeaveRoomButton />
       <ParticipantsButton />
       <ChatButton />
-      <MeetingRecordingButton isHost={isRoomHost} />
+      <MeetingRecordingButton
+        isHost={isRoomHost}
+        setIsRecordingToast={setIsRecordingToast}
+      />
     </div>
   );
 };

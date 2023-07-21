@@ -3,15 +3,10 @@ import { connect } from "react-redux";
 import { Tooltip, OverlayTrigger } from "react-bootstrap";
 import { setRecording } from "../../store/action";
 import * as webRTCHandler from "../../utils/webRTCHandler";
-import Toast from "react-bootstrap/Toast";
-import ToastContainer from "react-bootstrap/ToastContainer";
 
 const MeetingRecordingButton = (props) => {
-  const { isHost, setRecordingAction } = props;
+  const { isHost, setRecordingAction, setIsRecordingToast } = props;
   const [isRecording, setIsRecording] = useState("empty");
-  const [showToast, setShowToast] = useState(true);
-
-  const toggleShowToast = () => setShowToast(!showToast);
 
   const buttonClassName = `video_button ${
     isRecording === "start" ? "video_button_disabled" : ""
@@ -22,10 +17,12 @@ const MeetingRecordingButton = (props) => {
       setRecordingAction(true);
       console.log("Meeting button pressed: true");
       setIsRecording("start");
+      setIsRecordingToast("start");
     } else if (isRecording === "start") {
       setRecordingAction(false);
       console.log("Meeting button pressed: false");
       setIsRecording("stop");
+      setIsRecordingToast("stop");
     }
   };
 
@@ -49,38 +46,6 @@ const MeetingRecordingButton = (props) => {
 
   return (
     <>
-      {/* {isRecording === "start" && (
-        <ToastContainer className="p-3" position="top-center">
-          <Toast
-            show={showToast}
-            delay={3000}
-            autohide
-            onClose={toggleShowToast}
-            bg="dark"
-          >
-            <Toast.Header>
-              <strong className="me-auto">Meeting Recording Started</strong>
-            </Toast.Header>
-            <Toast.Body className="text-white"></Toast.Body>
-          </Toast>
-        </ToastContainer>
-      )}
-      {isRecording === "stop" && (
-        <ToastContainer className="p-3" position="top-center">
-          <Toast
-            show={showToast}
-            delay={3000}
-            autohide
-            onClose={toggleShowToast}
-            bg="dark"
-          >
-            <Toast.Header>
-              <strong className="me-auto">Meeting Recording Stopped</strong>
-            </Toast.Header>
-            <Toast.Body className="text-white"></Toast.Body>
-          </Toast>
-        </ToastContainer>
-      )} */}
       <div className="video_button_container">
         <OverlayTrigger placement="top" overlay={tooltip}>
           <button
