@@ -10,7 +10,7 @@ import * as webRTCHandler from "./webRTCHandler";
 
 const IP = window.location.hostname;
 // const SERVER = `http://43.204.75.41:5002`;
-//const SERVER = `https://${IP}`;
+const SERVER = `https://${IP}`;
 let socket = null;
 let recordingCounter = 0;
 let recordingStatus = false;
